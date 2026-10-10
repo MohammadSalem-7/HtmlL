@@ -1,108 +1,300 @@
-<!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مرجع شامل ومفصل لتاجات HTML5</title>
+  <meta name="description" content="مرجع شامل ومفصل لتعلم HTML و CSS و JavaScript بالعربية مع أمثلة عملية.">
+  <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@0.3.7"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>𓂀</text></svg>" />
+  <title>مرجع شامل: HTML و CSS و JavaScript</title>
 
   <style>
+/* =========================M E D O============================== */
+    :root {
+      --accent: #1e90ff;
+      --accent-dark: #0d6efd;
+      --side: #1e272e;
+      --side-2: #2b3940;
+      --side-3: #34495e;
+      --panel: #ffffff;
+      --ink: #333333;
+      --muted: #555555;
+      --border: #e6e9ef;
+      --code-bg: #2f3542;
+      --shadow: 0 6px 20px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --topbar-h: 58px;
+      --side-w: 300px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
       direction: rtl;
       background: linear-gradient(to left, #f1f2f6, #e9ecef);
       line-height: 1.7;
-      color: #333;
+      color: var(--ink);
     }
 
-    .container {
+    body.menu-open { overflow: hidden; }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: var(--topbar-h);
+      background: var(--side);
+      color: #fff;
       display: flex;
-      min-height: 100vh;
+      align-items: center;
+      gap: 14px;
+      padding: 0 18px;
+      z-index: 60;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
     }
 
-    aside {
-      width: 300px;
-      background: #1e272e;
+    .brand {
+      font-weight: bold;
+      font-size: 18px;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .brand span { color: var(--accent); }
+
+    .search-box {
+      position: relative;
+      margin-right: auto;
+      width: min(460px, 46vw);
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1px solid #3d4d55;
+      background: var(--side-2);
+      color: #fff;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    #searchInput:focus { border-color: var(--accent); }
+    #searchInput::placeholder { color: #9aa7b0; }
+
+    .search-results {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      left: 0;
+      background: #fff;
+      color: var(--ink);
+      border-radius: 10px;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.28);
+      max-height: 62vh;
+      overflow-y: auto;
+      z-index: 70;
+    }
+
+    .search-results a {
+      display: block;
+      padding: 10px 14px;
+      border-bottom: 1px solid #eee;
+      text-decoration: none;
+      color: #2f3542;
+    }
+
+    .search-results a:last-child { border-bottom: none; }
+    .search-results a:hover { background: #f1f8ff; }
+
+    .search-results .sr-ref {
+      display: inline-block;
+      font-size: 11px;
+      color: #fff;
+      background: var(--accent);
+      border-radius: 4px;
+      padding: 1px 7px;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+
+    .search-results .sr-title { font-size: 15px; font-weight: bold; }
+    .search-results .sr-snip { font-size: 13px; color: #666; }
+    .search-results .sr-empty { padding: 14px; color: #888; text-align: center; }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 42px;
+      height: 38px;
+      padding: 9px;
+      background: var(--side-2);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      display: block;
+      height: 3px;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    #sidebar {
+      width: var(--side-w);
+      background: var(--side);
       color: #fff;
       position: fixed;
-      height: 100vh;
+      top: var(--topbar-h);
+      right: 0;
+      height: calc(100vh - var(--topbar-h));
       overflow-y: auto;
-      padding: 30px 20px;
-      box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 50;
+      transition: transform 0.3s ease;
+      padding-bottom: 46px;
     }
 
-    aside h2 {
+    .side-head {
+      padding: 22px 20px 12px;
       text-align: center;
-      font-size: 24px;
-      margin-bottom: 30px;
-      color: #1e90ff;
     }
 
-    aside strong {
+    .side-head h2 {
+      margin: 0 0 4px;
+      font-size: 21px;
+      color: var(--accent);
+    }
+
+    .side-head p {
+      margin: 0;
+      font-size: 13px;
+      color: #9aa7b0;
+    }
+
+    .cat-tabs {
+      display: flex;
+      gap: 6px;
+      padding: 10px 14px;
+      position: sticky;
+      top: 0;
+      background: var(--side);
+      z-index: 3;
+      border-bottom: 1px solid #2d3b44;
+    }
+
+    .cat-tab {
+      flex: 1;
+      padding: 9px 4px;
+      border: none;
+      border-radius: 8px;
+      background: var(--side-2);
+      color: #dcdde1;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: inherit;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .cat-tab:hover { background: var(--side-3); }
+    .cat-tab.active { background: var(--accent); color: #fff; }
+
+    .side-nav { padding: 8px 14px; }
+    .side-nav[hidden] { display: none; }
+
+    .side-nav strong {
       display: block;
-      margin: 25px 0 10px;
-      font-size: 17px;
-      color: #1e90ff;
-      border-bottom: 1px solid #34495e;
-      padding-bottom: 8px;
+      margin: 20px 0 8px;
+      font-size: 14px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--side-3);
+      padding-bottom: 6px;
     }
 
-    aside a {
+    .side-nav a {
       display: block;
       color: #dcdde1;
       text-decoration: none;
-      padding: 10px 15px;
-      margin: 5px 0;
+      padding: 8px 12px;
+      margin: 3px 0;
       border-radius: 6px;
-      transition: all 0.3s;
+      font-size: 14px;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
     }
 
-    aside a:hover {
-      background: #34495e;
-      color: #1e90ff;
-      transform: translateX(-5px);
+    .side-nav a:hover,
+    .side-nav a.active {
+      background: var(--side-3);
+      color: var(--accent);
+      transform: translateX(-4px);
     }
 
-    main {
-      margin-right: 320px;
-      padding: 50px;
-      flex: 1;
+    .container > main {
+      margin-right: var(--side-w);
+      margin-top: var(--topbar-h);
+      padding: 40px;
+      min-height: calc(100vh - var(--topbar-h));
+    }
+
+    .reference { display: none; }
+    .reference.active { display: block; animation: fadeIn 0.3s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
     }
 
     h1 {
       text-align: center;
       color: #2f3542;
-      font-size: 32px;
-      margin-bottom: 20px;
+      font-size: 30px;
+      margin: 0 0 8px;
+    }
+
+    .page-sub {
+      text-align: center;
+      color: var(--accent);
+      font-weight: bold;
+      font-size: 15px;
+      margin: 0 0 18px;
     }
 
     .intro {
       text-align: center;
-      font-size: 18px;
-      color: #555;
-      max-width: 800px;
-      margin: 0 auto 50px;
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 820px;
+      margin: 0 auto 46px;
     }
 
-    section {
-      background: #fff;
-      padding: 35px;
-      margin-bottom: 50px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    .reference > section {
+      background: var(--panel);
+      padding: 34px;
+      margin-bottom: 46px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      scroll-margin-top: calc(var(--topbar-h) + 16px);
     }
 
-    section h2 {
-      color: #1e90ff;
-      font-size: 26px;
-      border-bottom: 3px solid #1e90ff;
+    .reference > section h2 {
+      color: var(--accent);
+      font-size: 25px;
+      border-bottom: 3px solid var(--accent);
       padding-bottom: 12px;
-      margin-bottom: 30px;
+      margin: 0 0 28px;
     }
 
     .tag {
-      margin-bottom: 40px;
-      padding-bottom: 30px;
+      margin-bottom: 38px;
+      padding-bottom: 28px;
       border-bottom: 1px dashed #eee;
     }
 
@@ -114,67 +306,148 @@
 
     .tag h3 {
       color: #2f3542;
-      font-size: 22px;
-      margin: 0 0 10px 0;
+      font-size: 21px;
+      margin: 0 0 10px;
       background: #f1f8ff;
       padding: 10px 15px;
-      border-right: 5px solid #1e90ff;
+      border-right: 5px solid var(--accent);
       border-radius: 6px;
     }
 
     .desc {
-      color: #555;
+      color: var(--muted);
       font-size: 16px;
       margin: 15px 0;
       background: #f8f9fa;
-      padding: 12px;
+      padding: 12px 14px;
       border-radius: 6px;
+    }
+
+    .desc code,
+    .tag p code,
+    section p code,
+    li code,
+    td code {
+      background: #eef2f7;
+      color: #c0392b;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.92em;
+      direction: ltr;
+      display: inline-block;
     }
 
     .example {
       background: #f1f2f6;
       padding: 20px;
-      border-right: 5px solid #1e90ff;
+      border-right: 5px solid var(--accent);
       margin: 20px 0;
       border-radius: 8px;
       font-size: 16px;
     }
 
+    .notes {
+      margin: 16px 0;
+      padding: 14px 18px;
+      background: #fff7e6;
+      border-right: 5px solid #f0a500;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .notes strong { color: #b26a00; }
+
     pre {
-      background: #2f3542;
+      position: relative;
+      background: var(--code-bg);
       color: #f1f2f6;
-      padding: 20px;
+      padding: 18px;
+      padding-top: 44px;
       border-radius: 8px;
       overflow-x: auto;
       direction: ltr;
       text-align: left;
-      font-size: 15px;
+      font-size: 14.5px;
       margin: 20px 0;
+      line-height: 1.6;
+      font-family: Consolas, 'Courier New', monospace;
+    }
+
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+      display: block;
+      white-space: pre;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      background: var(--side-3);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 12.5px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover { background: var(--accent); }
+    .copy-btn.done { background: #27ae60; }
+
+    .tok-tag { color: #ff6b81; }
+    .tok-attr { color: #ffd93d; }
+    .tok-str { color: #7bed9f; }
+    .tok-kw { color: #70a1ff; }
+    .tok-num { color: #e1b12c; }
+    .tok-fn { color: #70a1ff; }
+    .tok-cls { color: #ffa502; }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 22px 0;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 25px 0;
+      min-width: 520px;
     }
 
     table th, table td {
       border: 1px solid #ddd;
-      padding: 14px;
+      padding: 12px 14px;
       text-align: right;
+      font-size: 15px;
     }
 
     table th {
-      background: #1e90ff;
+      background: var(--accent);
       color: #fff;
       font-weight: bold;
     }
 
-    table tr:nth-child(even) {
-      background: #f8f9fa;
+    table tr:nth-child(even) { background: #f8f9fa; }
+    table caption {
+      caption-side: top;
+      text-align: right;
+      font-weight: bold;
+      color: var(--muted);
+      padding: 8px 2px;
     }
 
-    footer {
+    .example table { min-width: 300px; }
+
+    input, select, textarea { max-width: 100%; box-sizing: border-box; }
+    textarea { width: 100%; }
+
+    main > footer {
       text-align: center;
       padding: 40px;
       color: #777;
@@ -183,455 +456,3394 @@
       border-top: 1px solid #eee;
     }
 
-    footer strong {
-      color: #1e90ff;
+    main > footer strong { color: var(--accent); }
+
+    #backTop {
+      position: fixed;
+      bottom: 26px;
+      left: 26px;
+      width: 46px;
+      height: 46px;
+      border: none;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(30,144,255,0.45);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+      z-index: 55;
     }
-@media print {
 
-  body {
-    margin: 0;
-    background: #f1f2f6;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
+    #backTop.show {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
 
-  .container {
-    display: flex;
-  }
+    .overlay {
+      display: none;
+    }
 
-  aside {
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 300px;
-    height: 100vh;
-    background: #1e272e;
-    color: #fff;
-  }
+    @media (max-width: 900px) {
+      .menu-toggle { display: flex; }
 
-  main {
-    margin-right: 320px;
-    padding: 40px;
-  }
+      .brand { font-size: 15px; }
 
-  section {
-    page-break-inside: avoid;
-  }
+      .search-box { width: min(100%, 60vw); }
 
-  pre {
-    page-break-inside: avoid;
-  }
+      #sidebar {
+        transform: translateX(100%);
+        width: 280px;
+        box-shadow: -8px 0 24px rgba(0,0,0,0.4);
+      }
 
-  footer {
-    page-break-after: auto;
-  }
-}
+      body.menu-open #sidebar { transform: none; }
 
+      body.menu-open .overlay {
+        display: block;
+        position: fixed;
+        inset: var(--topbar-h) 0 0 0;
+        background: rgba(0,0,0,0.45);
+        z-index: 40;
+      }
+
+      .container > main {
+        margin-right: 0;
+        padding: 22px 16px;
+      }
+
+      .reference > section { padding: 20px; }
+      .reference > section h2 { font-size: 21px; }
+      pre { font-size: 13.5px; }
+      h1 { font-size: 23px; }
+    }
+
+    @media (max-width: 560px) {
+      .brand span { display: none; }
+      .brand { font-size: 13px; }
+    }
+
+    @media print {
+      .topbar, #sidebar, #backTop, .copy-btn, .menu-toggle { display: none !important; }
+
+      body {
+        margin: 0;
+        background: #f1f2f6;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .reference { display: block !important; }
+
+      .container > main { margin: 0; padding: 0; }
+
+      .reference > section { page-break-inside: avoid; box-shadow: none; }
+      pre { page-break-inside: avoid; }
+    }
+    .demo { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .demo label { display: flex; gap: 6px; align-items: center; font-size: 14px; }
+    .demo button { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 8px 16px; cursor: pointer; font-family: inherit; }
+    .demo button:hover { background: var(--accent-dark); }
+    .demo-stage { width: 100%; margin-top: 12px; background: #fff; border: 1px dashed #ccd3dc; border-radius: 8px; padding: 12px; overflow: hidden; }
+    .demo-out { width: 100%; margin-top: 12px; padding: 10px 14px; background: #fff; border: 1px dashed var(--accent); border-radius: 8px; direction: ltr; text-align: left; font-family: Consolas, 'Courier New', monospace; font-size: 14px; white-space: pre-wrap; word-break: break-all; min-height: 22px; }
+    .d-box { background: var(--accent); color: #fff; padding: 10px; border-radius: 6px; text-align: center; }
+    .d-flex { display: flex; min-height: 130px; gap: 8px; padding: 8px; background: #eef2f7; border-radius: 8px; }
+    .d-flex .d-box { width: 52px; }
+    .d-grid { display: grid; gap: 8px; }
+    .d-hover { background: #1e90ff; color: #fff; border: none; border-radius: 8px; padding: 10px 22px; cursor: pointer; transition: background 0.3s ease, transform 0.3s ease; font-family: inherit; }
+    .d-hover:hover { background: #0d6efd; transform: translateY(-4px); }
+    @keyframes d-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
+    .d-anim { width: 90px; margin: 14px auto; animation: d-pulse 1.2s infinite ease-in-out; }
+    #dm-l li { cursor: pointer; }
+    .tok-cmt { color: #a4b0be; }
   </style>
 </head>
 
 <body>
 
+<!-- ===========================M E D O============================ -->
+
+<header class="topbar">
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="sidebar">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="brand">مرجع <span>HTML</span> و <span>CSS</span> و <span>JavaScript</span></div>
+  <div class="search-box">
+    <input id="searchInput" type="search" placeholder="ابحث في المرجع كامل..." aria-label="بحث في المرجع" autocomplete="off">
+    <div class="search-results" id="searchResults" hidden></div>
+  </div>
+</header>
+
 <div class="container">
 
-  <!-- SIDEBAR -->
-  <aside>
-    <h2> تحياتي Mohammad Salem <hr></h2>
+  <aside id="sidebar">
+    <div class="side-head">
+      <h2>تحياتي Mohammad Salem</h2>
+      <p>مرجع الويب الشامل</p>
+    </div>
 
-    <strong>الهيكل الأساسي</strong>
-    <a href="#basic">!DOCTYPE, html, head, title, body</a>
+    <div class="cat-tabs" role="tablist" aria-label="فئات المرجع">
+      <button class="cat-tab active" type="button" data-ref="ref-html" aria-controls="ref-html" role="tab" aria-selected="true">HTML</button>
+      <button class="cat-tab" type="button" data-ref="ref-css" aria-controls="ref-css" role="tab" aria-selected="false">CSS</button>
+      <button class="cat-tab" type="button" data-ref="ref-js" aria-controls="ref-js" role="tab" aria-selected="false">JavaScript</button>
+    </div>
 
-    <strong>المحتوى والنصوص</strong>
-    <a href="#headings">العناوين h1-h6</a>
-    <a href="#paragraph">الفقرات p, div, span</a>
-    <a href="#text-format">تنسيق النص (strong, em, mark...)</a>
+    <nav class="side-nav" data-ref="ref-html" aria-label="روابط مرجع HTML">
+      <strong>الهيكل الأساسي</strong>
+      <a href="#basic">!DOCTYPE, html, head, title, body</a>
 
-    <strong>الروابط والوسائط</strong>
-    <a href="#links">الروابط a</a>
-    <a href="#images">الصور img, picture, figure</a>
-    <a href="#media">الفيديو والصوت video, audio</a>
+      <strong>المحتوى والنصوص</strong>
+      <a href="#headings">العناوين h1-h6</a>
+      <a href="#paragraph">الفقرات p, div, span</a>
+      <a href="#text-format">تنسيق النص (strong, em, mark...)</a>
 
-    <strong>القوائم والجداول</strong>
-    <a href="#lists">القوائم ul, ol, dl</a>
-    <a href="#tables">الجداول table</a>
+      <strong>الروابط والوسائط</strong>
+      <a href="#links">الروابط a</a>
+      <a href="#images">الصور img, picture, figure</a>
+      <a href="#media">الفيديو والصوت video, audio</a>
 
-    <strong>النماذج</strong>
-    <a href="#forms">form و input و textarea و button</a>
+      <strong>القوائم والجداول</strong>
+      <a href="#lists">القوائم ul, ol, dl</a>
+      <a href="#tables">الجداول table</a>
 
-    <strong>العناصر الدلالية</strong>
-    <a href="#semantic">header, nav, main, section, article, aside, footer</a>
+      <strong>النماذج</strong>
+      <a href="#forms">form و input و textarea و button</a>
 
-    <strong>عناصر متقدمة</strong>
-    <a href="#advanced">iframe, details, progress, meter, canvas</a>
+      <strong>العناصر الدلالية</strong>
+      <a href="#semantic">header, nav, main, section, article, aside, footer</a>
 
-    <strong>أخرى مهمة</strong>
-    <a href="#other">meta, link, script, blockquote, pre, code</a>
+      <strong>عناصر متقدمة</strong>
+      <a href="#advanced">iframe, details, progress, meter</a>
+
+      <strong>أخرى مهمة</strong>
+      <a href="#other">meta, blockquote, pre, code</a>
+    </nav>
+
+    <nav class="side-nav" data-ref="ref-css" aria-label="روابط مرجع CSS" hidden>
+      <strong>الأساسيات</strong>
+      <a href="#css-intro">مقدمة إلى CSS</a>
+      <a href="#css-syntax">الصياغة (Syntax)</a>
+      <a href="#css-apply">Inline و Internal و External</a>
+
+      <strong>المحددات والوراثة</strong>
+      <a href="#css-selectors">المحددات Selectors</a>
+      <a href="#css-combinators">عوامل الدمج (Combinators)</a>
+      <a href="#css-specificity">الخصوصية (Specificity)</a>
+      <a href="#css-cascade-inherit">التتالي والوراثة</a>
+
+      <strong>الألوان والخلفيات</strong>
+      <a href="#css-colors">الألوان</a>
+      <a href="#css-backgrounds">الخلفيات</a>
+      <a href="#css-gradients">التدرجات (Gradients)</a>
+      <a href="#css-borders">الحدود والظلال</a>
+
+      <strong>الوحدات والصندوق</strong>
+      <a href="#css-units">الوحدات (Units)</a>
+      <a href="#css-box-model">صندوق العنصر (Box Model)</a>
+      <a href="#css-sizing">الأبعاد و box-sizing</a>
+
+      <strong>النصوص والخطوط</strong>
+      <a href="#css-typography">التنسيق والطباعة</a>
+
+      <strong>التخطيط</strong>
+      <a href="#css-display">display و visibility</a>
+      <a href="#css-position">التمركز position</a>
+      <a href="#css-stacking">التراكب z-index</a>
+      <a href="#css-overflow">overflow</a>
+
+      <strong>Flexbox</strong>
+      <a href="#css-flexbox">صندوق مرن</a>
+
+      <strong>CSS Grid</strong>
+      <a href="#css-grid">الشبكة الشبكية</a>
+
+      <strong>متقدم</strong>
+      <a href="#css-pseudo">العناصر الزائفة</a>
+      <a href="#css-transitions">الانتقالات (Transitions)</a>
+      <a href="#css-transforms">التحويلات (Transforms)</a>
+      <a href="#css-animations">الحركات (Animations)</a>
+      <a href="#css-variables">متغيرات CSS</a>
+      <a href="#css-effects">الظلال والفلاتر</a>
+
+      <strong>التصميم المتجاوب</strong>
+      <a href="#css-responsive">Media Queries</a>
+
+      <strong>أنماط واجهات</strong>
+      <a href="#css-ui-patterns">أزرار وأشرطة وبطاقات</a>
+
+      <strong>الوصولية والجودة</strong>
+      <a href="#css-accessibility">الوصولية</a>
+      <a href="#css-best-practices">أفضل الممارسات</a>
+
+      <strong>مرجع سريع</strong>
+      <a href="#css-properties-table">جدول الخصائص الشائعة</a>
+    </nav>
+
+    <nav class="side-nav" data-ref="ref-js" aria-label="روابط مرجع JavaScript" hidden>
+      <strong>الأساسيات</strong>
+      <a href="#js-intro">مقدمة إلى JavaScript</a>
+      <a href="#js-syntax">الصياغة والتمحمدمات</a>
+      <a href="#js-variables">المتغيرات let/const/var</a>
+      <a href="#js-datatypes">أنواع البيانات</a>
+      <a href="#js-operators">العمليات (Operators)</a>
+
+      <strong>النصوص والأرقام</strong>
+      <a href="#js-strings">النصوص (Strings)</a>
+      <a href="#js-numbers">الأرقام والرياضيات</a>
+
+      <strong>التحكم في المسار</strong>
+      <a href="#js-conditions">الشروط if/switch</a>
+      <a href="#js-loops">الحلقات (Loops)</a>
+
+      <strong>الدوال</strong>
+      <a href="#js-functions">الدوال (Functions)</a>
+      <a href="#js-scope">النطاق (Scope)</a>
+
+      <strong>البيانات</strong>
+      <a href="#js-arrays">المصفوفات (Arrays)</a>
+      <a href="#js-objects">الكائنات (Objects)</a>
+      <a href="#js-set-map">Set و Map</a>
+      <a href="#js-json">JSON</a>
+
+      <strong>الأخطاء</strong>
+      <a href="#js-errors">الأخطاء و try/catch</a>
+
+      <strong>المتصفح و DOM</strong>
+      <a href="#js-dom-select">تحديد عناصر DOM</a>
+      <a href="#js-dom-modify">التعديل والإنشاء والحذف</a>
+      <a href="#js-events">الأحداث (Events)</a>
+      <a href="#js-forms">النماذج والتحقق</a>
+      <a href="#js-timers">المؤقتات وواجهات المتصفح</a>
+      <a href="#js-storage">التخزين المحلي</a>
+
+      <strong>البرمجة غير المتزامنة</strong>
+      <a href="#js-async">Promises و async/await</a>
+      <a href="#js-fetch">fetch والطلبات</a>
+
+      <strong>الكائنات والوحدات</strong>
+      <a href="#js-classes">الأصناف (Classes)</a>
+      <a href="#js-modules">الوحدات (Modules)</a>
+
+      <strong>حديثة ومراجع</strong>
+      <a href="#js-es6">ميزات ES6+</a>
+      <a href="#js-builtins">واجهات مدمجة شائعة</a>
+
+      <strong>الجودة والأمان</strong>
+      <a href="#js-debugging">تصحيح الأخطاء والأداء</a>
+      <a href="#js-security">الأمان</a>
+      <a href="#js-best-practices">أفضل الممارسات</a>
+    </nav>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <main>
 
-    <h1>كل حاجه عن اللغه  HTML5 <br><h4> متسألنيش ليه كاتب رقم 5</h4><hr></h1>
-    <p class="intro">دليل عملي وواضح يحتوي على شرح دقيق وأمثلة واقعية لكل تاج .</p>
+    <div class="reference active" id="ref-html" role="tabpanel" aria-label="مرجع HTML">
+      <h1>كل حاجه عن اللغه HTML5</h1>
+      <p class="page-sub">متسألنيش ليه كاتب رقم 5</p>
+      <p class="intro">دليل عملي وواضح يحتوي على شرح دقيق وأمثلة واقعية لكل تاج. تعلّم هيكل الصفحة والمحتوى والنماذج والوسائط، ثم انتقل إلى تبويب CSS ثم JavaScript من الشريط الجانبي.</p>
 
-    <!-- BASIC STRUCTURE -->
-    <section id="basic">
-      <h2>الهيكل الأساسي لصفحة HTML</h2>
+      <section id="basic">
+        <h2>الهيكل الأساسي لصفحة HTML</h2>
 
-      <div class="tag">
-        <h3>&lt;!DOCTYPE html&gt;</h3>
-        <p class="desc">يُخبر المتصفح أن الصفحة مكتوبة بلغة HTML5.</p>
-        <pre>&lt;!DOCTYPE html&gt;</pre>
-      </div>
+        <div class="tag">
+          <h3>&lt;!DOCTYPE html&gt;</h3>
+          <p class="desc">يُخبر المتصفح أن الصفحة مكتوبة بلغة HTML5.</p>
+          <pre>&lt;!DOCTYPE html&gt;</pre>
+        </div>
 
-      <div class="tag">
-        <h3>&lt;html&gt;</h3>
-        <p class="desc">العنصر الجذر الذي يحتوي على كل محتوى الصفحة. يُفضل تحديد اللغة والإتجاه.</p>
-        <pre>&lt;html lang="ar" dir="rtl"&gt;...&lt;/html&gt;</pre>
-      </div>
+        <div class="tag">
+          <h3>&lt;html&gt;</h3>
+          <p class="desc">العنصر الجذر الذي يحتوي على كل محتوى الصفحة. يُفضل تحديد اللغة والاتجاه.</p>
+          <pre>&lt;html lang="ar" dir="rtl"&gt;...&lt;/html&gt;</pre>
+        </div>
 
-      <div class="tag">
-        <h3>&lt;head&gt; و &lt;title&gt;</h3>
-        <p class="desc">يحتوي على بيانات الصفحة غير المرئية مثل العنوان والـ meta.</p>
-        <pre>&lt;head&gt;
+        <div class="tag">
+          <h3>&lt;head&gt; و &lt;title&gt;</h3>
+          <p class="desc">يحتوي على بيانات الصفحة غير المرئية مثل العنوان والـ meta.</p>
+          <pre>&lt;head&gt;
   &lt;title&gt;عنوان الصفحة في التبويب&lt;/title&gt;
 &lt;/head&gt;</pre>
-      </div>
-
-      <div class="tag">
-        <h3>&lt;body&gt;</h3>
-        <p class="desc">يحتوي على كل المحتوى المرئي للصفحة.</p>
-        <pre>&lt;body&gt;...المحتوى هنا...&lt;/body&gt;</pre>
-      </div>
-    </section>
-
-    <!-- HEADINGS -->
-    <section id="headings">
-      <h2>العناوين (Headings)</h2>
-
-      <div class="tag">
-        <h3>&lt;h1&gt; إلى &lt;h6&gt;</h3>
-        <p class="desc">تُستخدم لتحديد العناوين الرئيسية والفرعية. مهمة جداً لتحسين محركات البحث (SEO).</p>
-        <div class="example">
-          <h1>عنوان رئيسي (h1)</h1>
-          <h2>عنوان فرعي (h2)</h2>
-          <h3>عنوان ثانوي (h3)</h3>
-          <h4>عنوان أصغر (h4)</h4>
-          <h5>عنوان صغير (h5)</h5>
-          <h6>عنوان أصغر (h6)</h6>
         </div>
-        <pre>&lt;h1&gt;عنوان رئيسي&lt;/h1&gt;
+
+        <div class="tag">
+          <h3>&lt;body&gt;</h3>
+          <p class="desc">يحتوي على كل المحتوى المرئي للصفحة.</p>
+          <pre>&lt;body&gt;...المحتوى هنا...&lt;/body&gt;</pre>
+        </div>
+      </section>
+
+      <section id="headings">
+        <h2>العناوين (Headings)</h2>
+
+        <div class="tag">
+          <h3>&lt;h1&gt; إلى &lt;h6&gt;</h3>
+          <p class="desc">تُستخدم لتحديد العناوين الرئيسية والفرعية. مهمة جداً لتحسين محركات البحث (SEO).</p>
+          <div class="example">
+            <h1>عنوان رئيسي (h1)</h1>
+            <h2>عنوان فرعي (h2)</h2>
+            <h3>عنوان ثانوي (h3)</h3>
+            <h4>عنوان أصغر (h4)</h4>
+            <h5>عنوان صغير (h5)</h5>
+            <h6>عنوان أصغر (h6)</h6>
+          </div>
+          <pre>&lt;h1&gt;عنوان رئيسي&lt;/h1&gt;
 &lt;h2&gt;عنوان فرعي&lt;/h2&gt;</pre>
-      </div>
-    </section>
-
-    <!-- PARAGRAPH & BLOCK -->
-    <section id="paragraph">
-      <h2>الفقرات والحاويات</h2>
-
-      <div class="tag">
-        <h3>&lt;p&gt;</h3>
-        <p class="desc">لكتابة فقرة نصية مع ترك مسافة تلقائية قبل وبعد.</p>
-        <div class="example">هذه فقرة نصية كاملة تُستخدم لعرض المحتوى النصي الرئيسي في الصفحة.</div>
-        <pre>&lt;p&gt;هذه فقرة نصية كاملة...&lt;/p&gt;</pre>
-      </div>
-
-      <div class="tag">
-        <h3>&lt;div&gt; و &lt;span&gt;</h3>
-        <p class="desc">&lt;div&gt; حاوية بلوك عامة، &lt;span&gt; حاوية إنلاين لجزء من النص.</p>
-        <div class="example">
-          <div style="background:#eee;padding:10px;">هذا div يحتوي على محتوى بلوك</div>
-          نص عادي مع <span style="color:red;">جزء مميز بالـ span</span>.
         </div>
-        <pre>&lt;div&gt;...&lt;/div&gt;
+      </section>
+
+      <section id="paragraph">
+        <h2>الفقرات والحاويات</h2>
+
+        <div class="tag">
+          <h3>&lt;p&gt;</h3>
+          <p class="desc">لكتابة فقرة نصية مع ترك مسافة تلقائية قبل وبعد.</p>
+          <div class="example">هذه فقرة نصية كاملة تُستخدم لعرض المحتوى النصي الرئيسي في الصفحة.</div>
+          <pre>&lt;p&gt;هذه فقرة نصية كاملة...&lt;/p&gt;</pre>
+        </div>
+
+        <div class="tag">
+          <h3>&lt;div&gt; و &lt;span&gt;</h3>
+          <p class="desc">&lt;div&gt; حاوية بلوك عامة، &lt;span&gt; حاوية إنلاين لجزء من النص.</p>
+          <div class="example">
+            <div style="background:#eee;padding:10px;">هذا div يحتوي على محتوى بلوك</div>
+            نص عادي مع <span style="color:red;">جزء مميز بالـ span</span>.
+          </div>
+          <pre>&lt;div&gt;...&lt;/div&gt;
 &lt;span&gt;...&lt;/span&gt;</pre>
-      </div>
-
-      <div class="tag">
-        <h3>&lt;br&gt; و &lt;hr&gt;</h3>
-        <p class="desc">&lt;br&gt; فاصل سطر، &lt;hr&gt; خط أفقي للفصل بين الأقسام.</p>
-        <div class="example">سطر أول<br>سطر ثاني<hr>قسم جديد</div>
-      </div>
-    </section>
-
-    <!-- TEXT FORMAT -->
-    <section id="text-format">
-      <h2>تنسيق النصوص</h2>
-
-      <div class="tag">
-        <h3>&lt;strong&gt; و &lt;b&gt;</h3>
-        <p class="desc">&lt;strong&gt; للنص المهم دلالياً (غامق)، &lt;b&gt; للغامق التصميمي فقط.</p>
-        <div class="example"><strong>نص مهم جداً</strong> | <b>نص غامق تصميمياً</b></div>
-      </div>
-
-      <div class="tag">
-        <h3>&lt;em&gt; و &lt;i&gt;</h3>
-        <p class="desc">&lt;em&gt; للتأكيد (مائل)، &lt;i&gt; للمائل التصميمي.</p>
-        <div class="example"><em>نص مؤكد</em> | <i>نص مائل</i></div>
-      </div>
-
-      <div class="tag">
-        <h3>&lt;mark&gt;, &lt;u&gt;, &lt;small&gt;</h3>
-        <div class="example"><mark>نص مميز</mark> | <u>نص مسطر</u> | <small>نص صغير</small></div>
-      </div>
-
-      <div class="tag">
-        <h3>&lt;del&gt;, &lt;ins&gt;, &lt;sub&gt;, &lt;sup&gt;</h3>
-        <div class="example">
-          <del>نص محذوف</del> <ins>نص مضاف</ins><br>
-          H<sub>2</sub>O | x<sup>2</sup> + y<sup>2</sup>
         </div>
-      </div>
-    </section>
 
-    <!-- LINKS -->
-    <section id="links">
-      <h2>الروابط &lt;a&gt;</h2>
-
-      <div class="tag">
-        <h3>&lt;a&gt;</h3>
-        <p class="desc">لإنشاء روابط تشعبية. يمكن فتح الرابط في تبويب جديد باستخدام target="_blank".</p>
-        <div class="example">
-          <a href="https://mohammadsalem-7.github.io/me/" target="_blank">زيارة MDN بالعربي</a><br><br>
-          <a href="mailto:example@email.com">إرسال بريد إلكتروني</a><br><br>
-          <a href="tel:+123456789">اتصال برقم هاتف</a>
+        <div class="tag">
+          <h3>&lt;br&gt; و &lt;hr&gt;</h3>
+          <p class="desc">&lt;br&gt; فاصل سطر، &lt;hr&gt; خط أفقي للفصل بين الأقسام.</p>
+          <div class="example">سطر أول<br>سطر ثاني<hr>قسم جديد</div>
         </div>
-        <pre>&lt;a href="https://example.com" target="_blank"&gt;نص الرابط&lt;/a&gt;</pre>
-      </div>
-    </section>
+      </section>
 
-    <!-- IMAGES -->
-    <section id="images">
-      <h2>الصور</h2>
+      <section id="text-format">
+        <h2>تنسيق النصوص</h2>
 
-      <div class="tag">
-        <h3>&lt;img&gt;</h3>
-        <p class="desc">عرض صورة. دائماً أضف alt للوصولية وSEO.</p>
-        <pre>&lt;img src="logo.png" alt="شعار الموقع" width="200"&gt;</pre>
-      </div>
-
-      <div class="tag">
-        <h3>&lt;figure&gt; و &lt;figcaption&gt;</h3>
-        <p class="desc">لعرض صورة مع تعليق دلالي.</p>
-        <div class="example">
-          <figure>
-            <img src="https://via.placeholder.com/400x200" alt="صورة توضيحية">
-            <figcaption>تعليق على الصورة هنا</figcaption>
-          </figure>
+        <div class="tag">
+          <h3>&lt;strong&gt; و &lt;b&gt;</h3>
+          <p class="desc">&lt;strong&gt; للنص المهم دلالياً (غامق)، &lt;b&gt; للغامق التصميمي فقط.</p>
+          <div class="example"><strong>نص مهم جداً</strong> | <b>نص غامق تصميمياً</b></div>
         </div>
-      </div>
 
-      <div class="tag">
-        <h3>&lt;picture&gt;</h3>
-        <p class="desc">لعرض صور مختلفة حسب حجم الشاشة (Responsive).</p>
-        <pre>&lt;picture&gt;
+        <div class="tag">
+          <h3>&lt;em&gt; و &lt;i&gt;</h3>
+          <p class="desc">&lt;em&gt; للتأكيد (مائل)، &lt;i&gt; للمائل التصميمي.</p>
+          <div class="example"><em>نص مؤكد</em> | <i>نص مائل</i></div>
+        </div>
+
+        <div class="tag">
+          <h3>&lt;mark&gt;, &lt;u&gt;, &lt;small&gt;</h3>
+          <div class="example"><mark>نص مميز</mark> | <u>نص مسطر</u> | <small>نص صغير</small></div>
+        </div>
+
+        <div class="tag">
+          <h3>&lt;del&gt;, &lt;ins&gt;, &lt;sub&gt;, &lt;sup&gt;</h3>
+          <div class="example">
+            <del>نص محذوف</del> <ins>نص مضاف</ins><br>
+            H<sub>2</sub>O | x<sup>2</sup> + y<sup>2</sup>
+          </div>
+        </div>
+      </section>
+
+      <section id="links">
+        <h2>الروابط &lt;a&gt;</h2>
+
+        <div class="tag">
+          <h3>&lt;a&gt;</h3>
+          <p class="desc">لإنشاء روابط تشعبية. يمكن فتح الرابط في تبويب جديد باستخدام target="_blank".</p>
+          <div class="example">
+            <a href="https://mohammadsalem-7.github.io/me/" target="_blank" rel="noopener">زيارة موقع Mohammad Salem</a><br><br>
+            <a href="mailto:example@email.com">إرسال بريد إلكتروني</a><br><br>
+            <a href="tel:+123456789">اتصال برقم هاتف</a>
+          </div>
+          <pre>&lt;a href="https://example.com" target="_blank" rel="noopener"&gt;نص الرابط&lt;/a&gt;</pre>
+        </div>
+      </section>
+
+      <section id="images">
+        <h2>الصور</h2>
+
+        <div class="tag">
+          <h3>&lt;img&gt;</h3>
+          <p class="desc">عرض صورة. دائماً أضف alt للوصولية وSEO.</p>
+          <pre>&lt;img src="logo.png" alt="شعار الموقع" width="200"&gt;</pre>
+        </div>
+
+        <div class="tag">
+          <h3>&lt;figure&gt; و &lt;figcaption&gt;</h3>
+          <p class="desc">لعرض صورة مع تمحمدق دلالي.</p>
+          <div class="example">
+            <figure>
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='400' height='200' fill='%231e90ff'/%3E%3C/svg%3E" alt="صورة توضيحية" style="max-width:100%;">
+              <figcaption>تمحمدق على الصورة هنا</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="tag">
+          <h3>&lt;picture&gt;</h3>
+          <p class="desc">لعرض صور مختلفة حسب حجم الشاشة (Responsive).</p>
+          <pre>&lt;picture&gt;
   &lt;source media="(max-width:600px)" srcset="small.jpg"&gt;
   &lt;img src="large.jpg" alt="صورة"&gt;
 &lt;/picture&gt;</pre>
-      </div>
-    </section>
-
-    <!-- MEDIA -->
-    <section id="media">
-      <h2>الفيديو والصوت</h2>
-
-      <div class="tag">
-        <h3>&lt;video&gt;</h3>
-        <div class="example">
-          <video controls width="100%" poster="https://via.placeholder.com/600x300">
-            <source src="sample.mp4" type="video/mp4">
-            المتصفح لا يدعم الفيديو.
-          </video>
         </div>
-        <pre>&lt;video controls&gt;
+      </section>
+
+      <section id="media">
+        <h2>الفيديو والصوت</h2>
+
+        <div class="tag">
+          <h3>&lt;video&gt;</h3>
+          <pre>&lt;video controls&gt;
   &lt;source src="video.mp4" type="video/mp4"&gt;
 &lt;/video&gt;</pre>
-      </div>
+        </div>
 
-      <div class="tag">
-        <h3>&lt;audio&gt;</h3>
-        <pre>&lt;audio controls&gt;
+        <div class="tag">
+          <h3>&lt;audio&gt;</h3>
+          <pre>&lt;audio controls&gt;
   &lt;source src="audio.mp3" type="audio/mpeg"&gt;
 &lt;/audio&gt;</pre>
-      </div>
-    </section>
-
-    <!-- LISTS -->
-    <section id="lists">
-      <h2>القوائم</h2>
-
-      <div class="tag">
-        <h3>&lt;ul&gt; و &lt;ol&gt;</h3>
-        <div class="example">
-          <p>قائمة غير مرتبة:</p>
-          <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-          </ul>
-
-          <p>قائمة مرتبة:</p>
-          <ol>
-            <li>تعلم HTML</li>
-            <li>تعلم CSS</li>
-            <li>تعلم JavaScript</li>
-          </ol>
         </div>
-      </div>
+      </section>
 
-      <div class="tag">
-        <h3>&lt;dl&gt; قائمة وصف</h3>
-        <div class="example">
-          <dl>
-            <dt>HTML</dt>
-            <dd>لغة هيكلة صفحات الويب</dd>
-            <dt>CSS</dt>
-            <dd>لغة تنسيق وتصميم الصفحات</dd>
-          </dl>
+      <section id="lists">
+        <h2>القوائم</h2>
+
+        <div class="tag">
+          <h3>&lt;ul&gt; و &lt;ol&gt;</h3>
+          <div class="example">
+            <p>قائمة غير مرتبة:</p>
+            <ul>
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+            </ul>
+
+            <p>قائمة مرتبة:</p>
+            <ol>
+              <li>تعلم HTML</li>
+              <li>تعلم CSS</li>
+              <li>تعلم JavaScript</li>
+            </ol>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- TABLES -->
-    <section id="tables">
-      <h2>الجداول</h2>
-
-      <div class="tag">
-        <h3>&lt;table&gt;</h3>
-        <div class="example">
-          <table>
-            <caption>جدول مقارنة التقنيات</caption>
-            <thead>
-              <tr>
-                <th>التقنية</th>
-                <th>الاستخدام</th>
-                <th>المستوى</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>HTML</td>
-                <td>الهيكلة</td>
-                <td>أساسي</td>
-              </tr>
-              <tr>
-                <td>CSS</td>
-                <td>التنسيق</td>
-                <td>متوسط</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="tag">
+          <h3>&lt;dl&gt; قائمة وصف</h3>
+          <div class="example">
+            <dl>
+              <dt>HTML</dt>
+              <dd>لغة هيكلة صفحات الويب</dd>
+              <dt>CSS</dt>
+              <dd>لغة تنسيق وتصميم الصفحات</dd>
+            </dl>
+          </div>
         </div>
-        <pre>&lt;table&gt;...&lt;/table&gt;</pre>
-      </div>
-    </section>
+      </section>
 
-    <!-- FORMS -->
-    <section id="forms">
-      <h2>النماذج (Forms)</h2>
+      <section id="tables">
+        <h2>الجداول</h2>
 
-      <div class="tag">
-        <h3>&lt;form&gt; وأنواع &lt;input&gt;</h3>
-        <div class="example">
-          <form>
-            <label>الاسم الكامل: <input type="text" placeholder="أدخل اسمك" required></label><br><br>
-            <label>البريد: <input type="email" required></label><br><br>
-            <label>كلمة المرور: <input type="password"></label><br><br>
-            <label>تاريخ الميلاد: <input type="date"></label><br><br>
-            <label>اختر لغتك المفضلة:</label>
-            <select>
-              <option>عربي</option>
-              <option>إنجليزي</option>
-            </select><br><br>
-            <label><input type="checkbox"> أوافق على الشروط</label><br><br>
-            <button type="submit">إرسال النموذج</button>
-          </form>
+        <div class="tag">
+          <h3>&lt;table&gt;</h3>
+          <div class="example">
+            <table>
+              <caption>جدول مقارنة التقنيات</caption>
+              <thead>
+                <tr>
+                  <th>التقنية</th>
+                  <th>الاستخدام</th>
+                  <th>المستوى</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>HTML</td>
+                  <td>الهيكلة</td>
+                  <td>أساسي</td>
+                </tr>
+                <tr>
+                  <td>CSS</td>
+                  <td>التنسيق</td>
+                  <td>متوسط</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pre>&lt;table&gt;...&lt;/table&gt;</pre>
         </div>
-      </div>
+      </section>
 
-      <div class="tag">
-        <h3>&lt;textarea&gt;</h3>
-        <div class="example">
-          <textarea placeholder="اكتب رسالتك هنا..." rows="5" cols="50"></textarea>
+      <section id="forms">
+        <h2>النماذج (Forms)</h2>
+
+        <div class="tag">
+          <h3>&lt;form&gt; وأنواع &lt;input&gt;</h3>
+          <div class="example">
+            <form>
+              <label>الاسم الكامل: <input type="text" placeholder="أدخل اسمك" required></label><br><br>
+              <label>البريد: <input type="email" required></label><br><br>
+              <label>كلمة المرور: <input type="password"></label><br><br>
+              <label>تاريخ الميلاد: <input type="date"></label><br><br>
+              <label for="fav-lang">اختر لغتك المفضلة:</label>
+              <select id="fav-lang">
+                <option>عربي</option>
+                <option>إنجليزي</option>
+              </select><br><br>
+              <label><input type="checkbox"> أوافق على الشروط</label><br><br>
+              <button type="submit">إرسال النموذج</button>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- SEMANTIC -->
-    <section id="semantic">
-      <h2>العناصر الدلالية (Semantic HTML5)</h2>
-
-      <div class="tag">
-        <h3>أمثلة شائعة</h3>
-        <p class="desc">تساعد في فهم هيكل الصفحة وتحسين SEO والوصولية.</p>
-        <div class="example">
-          <header>الهيدر (شعار + قائمة تنقل)</header>
-          <nav>قائمة التنقل الرئيسية</nav>
-          <main>المحتوى الرئيسي</main>
-          <section>قسم داخلي</section>
-          <article>مقال مستقل</article>
-          <aside>محتوى جانبي (إعلانات، روابط ذات صلة)</aside>
-          <footer>الفوتر (حقوق النشر، روابط)</footer>
+        <div class="tag">
+          <h3>&lt;textarea&gt;</h3>
+          <div class="example">
+            <textarea placeholder="اكتب رسالتك هنا..." rows="5" cols="50"></textarea>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ADVANCED -->
-    <section id="advanced">
-      <h2>عناصر متقدمة</h2>
+      <section id="semantic">
+        <h2>العناصر الدلالية (Semantic HTML5)</h2>
 
-      <div class="tag">
-        <h3>&lt;details&gt; و &lt;summary&gt;</h3>
-        <div class="example">
-          <details>
-            <summary>اضغط لعرض الأسئلة الشائعة</summary>
-            <p>هذا محتوى يظهر عند الضغط على العنوان.</p>
-          </details>
+        <div class="tag">
+          <h3>أمثلة شائعة</h3>
+          <p class="desc">تساعد في فهم هيكل الصفحة وتحسين SEO والوصولية.</p>
+          <div class="example">
+            <header>الهيدر (شعار + قائمة تنقل)</header>
+            <nav>قائمة التنقل الرئيسية</nav>
+            <div>المحتوى الرئيسي (main)</div>
+            <section>قسم داخلي</section>
+            <article>مقال مستقل</article>
+            <aside>محتوى جانبي (إعلانات، روابط ذات صلة)</aside>
+            <footer>الفوتر (حقوق النشر، روابط)</footer>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="tag">
-        <h3>&lt;progress&gt; و &lt;meter&gt;</h3>
-        <div class="example">
-          تحميل: <progress value="75" max="100">75%</progress><br><br>
-          تقييم: <meter value="8" min="0" max="10">8/10</meter>
+      <section id="advanced">
+        <h2>عناصر متقدمة</h2>
+
+        <div class="tag">
+          <h3>&lt;details&gt; و &lt;summary&gt;</h3>
+          <div class="example">
+            <details>
+              <summary>اضغط لعرض الأسئلة الشائعة</summary>
+              <p>هذا محتوى يظهر عند الضغط على العنوان.</p>
+            </details>
+          </div>
         </div>
-      </div>
 
-      <div class="tag">
-        <h3>&lt;iframe&gt;</h3>
-        <pre>&lt;iframe src="https://example.com" width="600" height="400" title="صفحة مدمجة"&gt;&lt;/iframe&gt;</pre>
-      </div>
-    </section>
+        <div class="tag">
+          <h3>&lt;progress&gt; و &lt;meter&gt;</h3>
+          <div class="example">
+            تحميل: <progress value="75" max="100">75%</progress><br><br>
+            تقييم: <meter value="8" min="0" max="10">8/10</meter>
+          </div>
+        </div>
 
-    <!-- OTHER -->
-    <section id="other">
-      <h2>عناصر أخرى مهمة</h2>
+        <div class="tag">
+          <h3>&lt;iframe&gt;</h3>
+          <pre>&lt;iframe src="https://example.com" width="600" height="400" title="صفحة مدمجة"&gt;&lt;/iframe&gt;</pre>
+        </div>
+      </section>
 
-      <div class="tag">
-        <h3>&lt;meta&gt;</h3>
-        <pre>&lt;meta charset="UTF-8"&gt;
+      <section id="other">
+        <h2>عناصر أخرى مهمة</h2>
+
+        <div class="tag">
+          <h3>&lt;meta&gt;</h3>
+          <pre>&lt;meta charset="UTF-8"&gt;
 &lt;meta name="description" content="مرجع HTML شامل"&gt;
 &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</pre>
-      </div>
-
-      <div class="tag">
-        <h3>&lt;blockquote&gt; و &lt;pre&gt; و &lt;code&gt;</h3>
-        <div class="example">
-          <blockquote>اقتباس طويل يُعرض بمسافة جانبية.</blockquote>
-          <pre>&lt;p&gt;هذا كود محفوظ التنسيق&lt;/p&gt;</pre>
-          <p>استخدم <code>&lt;div&gt;</code> لتجميع العناصر.</p>
         </div>
-      </div>
-    </section>
+
+        <div class="tag">
+          <h3>&lt;blockquote&gt; و &lt;pre&gt; و &lt;code&gt;</h3>
+          <div class="example">
+            <blockquote>اقتباس طويل يُعرض بمسافة جانبية.</blockquote>
+            <pre>&lt;p&gt;هذا كود محفوظ التنسيق&lt;/p&gt;</pre>
+            <p>استخدم <code>&lt;div&gt;</code> لتجميع العناصر.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="reference" id="ref-css" role="tabpanel" aria-label="مرجع CSS" hidden>
+      <h1>مرجع CSS الكامل</h1>
+      <p class="page-sub">لغة تنسيق صفحات الويب</p>
+      <p class="intro">تعلّم كيف تُحوّل هيكل HTML إلى واجهة جميلة ومتجاوبة: المحددات، الألوان، الصندوق، التخطيط، Flexbox، Grid، الحركات، والتصميم المتجاوب.</p>
+      <section id="css-intro">
+        <h2>مقدمة إلى CSS</h2>
+
+        <div class="tag">
+          <h3>ما هي CSS؟</h3>
+          <p class="desc">CSS اختصار لـ <strong>Cascading Style Sheets</strong> أي «أوراق الأنماط المتتالية». هي اللغة المسؤولة عن شكل الصفحة: الألوان، الخطوط، المسافات، الأبعاد، والتخطيط. إذا كانت HTML هي الهيكل العظمي، فإن CSS هي الملابس والشكل النهائي.</p>
+          <pre data-lang="css">h1 {
+  color: #1e90ff;
+  font-size: 32px;
+  text-align: center;
+}</pre>
+          <p class="desc">هذا المثال يختار كل عناصر <code>&lt;h1&gt;</code> ويجعل لونها أزرق وحجمها 32 بكسل ومحاذاتها في المنتصف.</p>
+        </div>
+
+        <div class="tag">
+          <h3>لماذا نستخدم CSS؟</h3>
+          <ul>
+            <li><strong>الفصل بين المحتوى والشكل:</strong> يبقى HTML للهيكل فقط، مما يجعل الكود أنظف وأسهل في الصيانة.</li>
+            <li><strong>إعادة الاستخدام:</strong> قاعدة واحدة يمكن أن تنسّق مئات العناصر في كل الصفحات.</li>
+            <li><strong>التصميم المتجاوب:</strong> تغيير الشكل حسب حجم الشاشة عبر Media Queries.</li>
+            <li><strong>الحركة والتفاعل:</strong> الانتقالات والتحويلات والحركات بدون كتابة JavaScript.</li>
+          </ul>
+        </div>
+
+        <div class="tag">
+          <h3>الوراثة والمبدأ الأساسي</h3>
+          <p class="desc">فكرة CSS بسيطة: تخبر المتصفح «عندما تجد عنصراً كهذا، اعرضه بهذه الطريقة». المتصفح يطبّق القواعد ثم يحسم أيها يفوز عند التعارض حسب التتالي (Cascade) والخصوصية (Specificity).</p>
+        </div>
+      </section>
+
+      <section id="css-syntax">
+        <h2>الصياغة (Syntax)</h2>
+
+        <div class="tag">
+          <h3>تشريح القاعدة</h3>
+          <p class="desc">تتكوّن كل قاعدة CSS من جزأين: المحدد (Selector) الذي يحدد العناصر، وكتلة التصريحات بين قوسين تحتوي على خاصية وقيمة.</p>
+          <pre data-lang="css">p {
+  color: blue;
+  font-size: 16px;
+}</pre>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الجزء</th><th>المعنى</th><th>مثال</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Selector</td><td>يختار العناصر المستهدفة</td><td><code>p</code> أو <code>.card</code></td></tr>
+                <tr><td>Property</td><td>اسم الخاصية التي نريد تغييرها</td><td><code>color</code></td></tr>
+                <tr><td>Value</td><td>القيمة المطبقة على الخاصية</td><td><code>blue</code></td></tr>
+                <tr><td>Declaration</td><td>زوج خاصية وقيمة ينتهي بفاصلة منقوطة</td><td><code>color: blue;</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tag">
+          <h3>قواعد يجب تذكّرها</h3>
+          <ul>
+            <li>كل تصريح ينتهي بفاصلة منقوطة <code>;</code> وكل كتلة تفتح بـ <code>{</code> وتغلق بـ <code>}</code>.</li>
+            <li>أسماء الخصائص والقيم غير حسّاسة لحالة الأحرف، لكن الأفضل الكتابة بحروف صغيرة.</li>
+            <li>يمكن كتابة أكثر من محدد يفصل بينهم فاصلة لتطبيق نفس القاعدة محمدهم جميعاً.</li>
+            <li>المسافات الزائدة لا تؤثر على النتيجة، لكن التنسيق الجيد يسهّل القراءة.</li>
+          </ul>
+          <pre data-lang="css">h1, h2, h3 {
+  font-family: Tahoma, Arial, sans-serif;
+  color: #2f3542;
+}</pre>
+        </div>
+      </section>
+
+      <section id="css-apply">
+        <h2>طرق إضافة CSS: Inline و Internal و External</h2>
+
+        <div class="tag">
+          <h3>CSS مضمّن (Inline)</h3>
+          <p class="desc">يُكتب داخل خاصية <code>style</code> على العنصر نفسه. أعلى أولوية، لكنه يصعّب الصيانة ويكرر الكود، لذا يُستخدم بحالات نادرة.</p>
+          <pre data-lang="html">&lt;p style="color: red; font-size: 18px;"&gt;نص أحمر بحجم أكبر&lt;/p&gt;</pre>
+        </div>
+
+        <div class="tag">
+          <h3>CSS داخلي (Internal)</h3>
+          <p class="desc">يُكتب داخل عنصر <code>&lt;style&gt;</code> في رأس الصفحة، وينطبق على الصفحة بأكملها. مناسب للصفحات الصغيرة وللتعلم.</p>
+          <pre data-lang="html">&lt;head&gt;
+  &lt;style&gt;
+    body {
+      background: #f1f2f6;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</pre>
+        </div>
+
+        <div class="tag">
+          <h3>CSS خارجي (External)</h3>
+          <p class="desc">يُكتب في ملف مستقل بامتداد <code>.css</code> ويُربط بالصفحة عبر <code>&lt;link&gt;</code>. الأسلوب المفضّل للمشاريع الكبيرة لأنه يُخزّن مؤقتاً في المتصفح ويُعاد استخدامه بين كل الصفحات.</p>
+          <pre data-lang="html">&lt;link rel="stylesheet" href="style.css"&gt;</pre>
+        </div>
+
+        <div class="notes"><strong>ترتيب الأولوية:</strong> عند التعارض يفوز الـ Inline، ثم الـ Internal/External حسب ترتيب ورودها، وتُحسم البقية بالخصوصية ثم التتالي.</div>
+      </section>
+
+      <section id="css-selectors">
+        <h2>المحددات (Selectors)</h2>
+
+        <div class="tag">
+          <h3>المحددات الأساسية</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>المحدد</th><th>المثال</th><th>يختار</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Type</td><td><code>p</code></td><td>كل عناصر p</td></tr>
+                <tr><td>Class</td><td><code>.card</code></td><td>كل عنصر يحمل <code>class="card"</code></td></tr>
+                <tr><td>ID</td><td><code>#header</code></td><td>العنصر ذو <code>id="header"</code></td></tr>
+                <tr><td>Universal</td><td><code>*</code></td><td>كل العناصر</td></tr>
+                <tr><td>Group</td><td><code>h1, h2</code></td><td>كل عناصر h1 و h2 معاً</td></tr>
+                <tr><td>Attribute</td><td><code>[type="email"]</code></td><td>عناصر لها هذه الخاصية بهذه القيمة</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">.card { border: 1px solid #ddd; }
+#header { background: #1e272e; }
+* { box-sizing: border-box; }
+input[type="email"] { direction: ltr; }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>محددات متقدمة</h3>
+          <p class="desc">تتيح لك اختيار عناصر بذكاء أكبر اعتماداً على خصائصها أو موضعها.</p>
+          <pre data-lang="css">a[href^="https"] { color: green; }
+a[href$=".pdf"] { font-weight: bold; }
+img[alt*="شعار"] { opacity: 0.9; }</pre>
+          <p class="desc"><code>^=</code> يعني «يبدأ بـ»، <code>$=</code> يعني «ينتهي بـ»، و<code>*=</code> يعني «يحتوي على».</p>
+        </div>
+
+        <div class="notes"><strong>ملاحظة:</strong> الـ ID يجب أن يكون فريداً في الصفحة، بينما الـ class قابل للتكرار على عناصر كثيرة. الأفضل الاعتماد على الـ class أكثر من الـ ID في التنسيق.</div>
+      </section>
+
+      <section id="css-combinators">
+        <h2>عوامل الدمج (Combinators)</h2>
+
+        <div class="tag">
+          <h3>أنواع الدمج</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>العامل</th><th>المثال</th><th>المعنى</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>مسافة</td><td><code>div p</code></td><td>كل p داخل div بأي عمق</td></tr>
+                <tr><td>&gt;</td><td><code>div &gt; p</code></td><td>p الابن المباشر فقط</td></tr>
+                <tr><td>+</td><td><code>h2 + p</code></td><td>أول p مباشرة بعد h2</td></tr>
+                <tr><td>~</td><td><code>h2 ~ p</code></td><td>كل إخوة p اللاحقين لـ h2</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">nav a { color: #fff; }
+ul &gt; li { list-style: none; }
+h2 + p { margin-top: 0; }
+h2 ~ p { color: #555; }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>متى تستخدم أيّها؟</h3>
+          <p class="desc">استخدم الابن المباشر <code>&gt;</code> عندما تريد تقييد التنسيق بطبقة واحدة دون التأثير على العناصر المتداخلة بعمق، واستخدم <code>+</code> لتنسيق عنصر يعقب آخر مباشرة مثل تنسيق أول فقرة بعد عنوان.</p>
+        </div>
+      </section>
+
+      <section id="css-specificity">
+        <h2>الخصوصية (Specificity)</h2>
+
+        <div class="tag">
+          <h3>كيف يحسم المتصفح التعارض؟</h3>
+          <p class="desc">عندما تنطبق قاعدتان على نفس العنصر، يفوز الأكثر خصوصية. تُحسب الخصوصية كسلسلة من الأوزان: الأنماط المضمّنة (Inline)، ثم الـ ID، ثم الـ class والـ attribute والـ pseudo-class، ثم أسماء العناصر.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>المحدد</th><th>الوزن التقريبي</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Element (p)</td><td>1</td></tr>
+                <tr><td>Class / Attribute / Pseudo-class (.card, [type], :hover)</td><td>10</td></tr>
+                <tr><td>ID (#header)</td><td>100</td></tr>
+                <tr><td>Inline style</td><td>1000</td></tr>
+                <tr><td>!important</td><td>يتجاوز كل ما سبق</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">p { color: black; }
+.text { color: blue; }
+#main { color: red; }</pre>
+          <p class="desc">العنصر <code>&lt;p id="main" class="text"&gt;</code> سيظهر بلون أحمر لأن الـ ID أقوى من الكلاس والعنصر.</p>
+        </div>
+
+        <div class="notes"><strong>نصيحة:</strong> تجنّب <code>!important</code> إلا في حالات الضرورة القصوى، لأنه يكسر سلسلة التتالي ويجعل الصيانة صعبة. حسّن ترتيب محدداتك بدلاً منه.</div>
+      </section>
+
+      <section id="css-cascade-inherit">
+        <h2>التتالي والوراثة (Cascade &amp; Inheritance)</h2>
+
+        <div class="tag">
+          <h3>ترتيب التتالي</h3>
+          <p class="desc">يحسم المتصفح النتيجة النهائية بترتيب ثابت: أولاً مصدر النمط وأهميته، ثم الخصوصية، ثم ترتيب الظهور. القاعدة الأحدث في نفس المستوى تفوز على الأقدم.</p>
+        </div>
+
+        <div class="tag">
+          <h3>الوراثة</h3>
+          <p class="desc">بعض الخصائص مثل <code>color</code> و<code>font-family</code> تُورَّث من العنصر الأب إلى الأبناء تلقائياً، بينما خصائص مثل <code>margin</code> و<code>border</code> لا تُورَّث.</p>
+          <pre data-lang="css">body { font-family: Tahoma; color: #333; }
+.inherit { color: inherit; }
+.reset { color: initial; }
+.fixed { color: unset; }</pre>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>القيمة</th><th>المعنى</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>inherit</code></td><td>خذ القيمة من العنصر الأب</td></tr>
+                <tr><td><code>initial</code></td><td>أعد القيمة الافتراضية للخاصية</td></tr>
+                <tr><td><code>unset</code></td><td>وراثة إن كانت موروثة، وإلا القيمة الافتراضية</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="css-colors">
+        <h2>الألوان</h2>
+
+        <div class="tag">
+          <h3>طرق كتابة اللون</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الطريقة</th><th>المثال</th><th>الوصف</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>اسم اللون</td><td><code>red</code></td><td>أسماء جاهزة (144 لوناً)</td></tr>
+                <tr><td>Hex</td><td><code>#1e90ff</code></td><td>نظام سادس عشري RGB</td></tr>
+                <tr><td>RGB</td><td><code>rgb(30, 144, 255)</code></td><td>القيم من 0 إلى 255</td></tr>
+                <tr><td>RGBA</td><td><code>rgba(30, 144, 255, 0.5)</code></td><td>مع شفافية</td></tr>
+                <tr><td>HSL</td><td><code>hsl(210, 100%, 56%)</code></td><td>درجة، تشبّع، سطوع</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">.title { color: #1e90ff; }
+.overlay { background: rgba(0, 0, 0, 0.6); }
+.success { color: hsl(145, 63%, 42%); }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>الشفافية</h3>
+          <p class="desc">خاصية <code>opacity</code> تُشفّف العنصر بكامله بما فيه النص، بينما اللون بشفافية في الخلفية يؤثر على الخلفية فقط.</p>
+          <pre data-lang="css">.ghost { opacity: 0.5; }
+.box { background: rgba(30, 144, 255, 0.3); }</pre>
+        </div>
+      </section>
+
+      <section id="css-backgrounds">
+        <h2>الخلفيات (Backgrounds)</h2>
+
+        <div class="tag">
+          <h3>خصائص الخلفية</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الخاصية</th><th>الوظيفة</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>background-color</code></td><td>لون الخلفية</td></tr>
+                <tr><td><code>background-image</code></td><td>صورة أو تدرّج للخلفية</td></tr>
+                <tr><td><code>background-repeat</code></td><td>تكرار الصورة (no-repeat, repeat-x, repeat-y)</td></tr>
+                <tr><td><code>background-position</code></td><td>موضع الصورة (center, top right...)</td></tr>
+                <tr><td><code>background-size</code></td><td>حجم الصورة (cover, contain, 100%)</td></tr>
+                <tr><td><code>background-attachment</code></td><td>تثبيت الخلفية (scroll, fixed)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">.hero {
+  background-color: #1e272e;
+  background-image: url("hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>الاختصار (Shorthand)</h3>
+          <p class="desc">يمكن دمج الخصائص في سطر واحد بترتيب: اللون، الصورة، التكرار، التثبيت، الموضع.</p>
+          <pre data-lang="css">.hero {
+  background: #1e272e url("hero.jpg") no-repeat center / cover;
+}</pre>
+        </div>
+      </section>
+
+      <section id="css-gradients">
+        <h2>التدرجات (Gradients)</h2>
+
+        <div class="tag">
+          <h3>التدرّج الخطي Linear</h3>
+          <p class="desc">ينتقل اللون على خط مستقيم بزاوية أو اتجاه محدد. يمكن إضافة عدة محطات ألوان.</p>
+          <div class="example"><div class="demo"><label>الزاوية <input type="range" id="gr-a" min="0" max="360" value="45"></label><label>اللون الأول <input type="color" id="gr-1" value="#1e90ff"></label><label>اللون الثاني <input type="color" id="gr-2" value="#6c5ce7"></label></div><div class="demo-stage"><div id="gr-b" style="height:90px;border-radius:8px"></div><div class="demo-out" id="gr-t"></div></div></div>
+          <pre data-lang="css">.linear {
+  background: linear-gradient(45deg, #1e90ff, #6c5ce7);
+}
+.stripes {
+  background: linear-gradient(to right, red 0 20px, white 20px 40px);
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>التدرّج الدائري Conic و Radial</h3>
+          <pre data-lang="css">.radial {
+  background: radial-gradient(circle, #fff, #1e90ff);
+}
+.conic {
+  background: conic-gradient(#1e90ff, #6c5ce7, #1e90ff);
+}</pre>
+          <p class="desc">التدرّج الدائري يبدأ من نقطة وينتشر للخارج، والتدرّج المخروطي يدور حول نقطة كعقارب الساعة.</p>
+        </div>
+      </section>
+
+      <section id="css-borders">
+        <h2>الحدود والظلال</h2>
+
+        <div class="tag">
+          <h3>الحدود (border)</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الخاصية</th><th>القيم</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>border-width</code></td><td>thin, medium, thick, أو 2px</td></tr>
+                <tr><td><code>border-style</code></td><td>solid, dashed, dotted, double, none</td></tr>
+                <tr><td><code>border-color</code></td><td>أي قيمة لون</td></tr>
+                <tr><td><code>border-radius</code></td><td>تدوير الزوايا، و50% لعمل دائرة</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">.box {
+  border: 2px solid #1e90ff;
+  border-radius: 10px;
+}
+.circle { border-radius: 50%; }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>حدود منفردة و outline</h3>
+          <pre data-lang="css">.card { border-right: 5px solid #1e90ff; }
+input:focus { outline: 2px solid #1e90ff; }</pre>
+          <p class="desc"><code>outline</code> يشبه الحد لكنه لا يشغل مساحة ولا يؤثر على التخطيط، ويُستخدم كثيراً لإبراز العنصر عند التركيز.</p>
+        </div>
+      </section>
+
+      <section id="css-units">
+        <h2>الوحدات (Units)</h2>
+
+        <div class="tag">
+          <h3>الوحدات المطلقة والنسبية</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الوحدة</th><th>النوع</th><th>الوصف</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>px</code></td><td>مطلقة</td><td>بكسل، ثابتة لا تتغير</td></tr>
+                <tr><td><code>%</code></td><td>نسبية</td><td>نسبة من العنصر الأب</td></tr>
+                <tr><td><code>em</code></td><td>نسبية</td><td>نسبة من حجم خط العنصر الحالي</td></tr>
+                <tr><td><code>rem</code></td><td>نسبية</td><td>نسبة من حجم خط العنصر الجذر html</td></tr>
+                <tr><td><code>vw/vh</code></td><td>نسبية</td><td>نسبة من عرض/ارتفاع نافذة العرض</td></tr>
+                <tr><td><code>ch</code></td><td>نسبية</td><td>عرض المحرف الرقمي صفر</td></tr>
+                <tr><td><code>fr</code></td><td>شبكية</td><td>جزء من المساحة المتاحة في Grid</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">html { font-size: 16px; }
+h1 { font-size: 2rem; }
+.container { width: 90%; max-width: 1100px; }
+.hero { min-height: 60vh; }</pre>
+        </div>
+
+        <div class="notes"><strong>لماذا rem؟</strong> استخدام <code>rem</code> يجعل المقاسات متسقة وقابلة للتكبير والتصغير، ويحترم إعدادات حجم الخط لدى المستخدم.</div>
+      </section>
+
+      <section id="css-box-model">
+        <h2>صندوق العنصر (Box Model)</h2>
+
+        <div class="tag">
+          <h3>الطبقات الأربع</h3>
+          <p class="desc">كل عنصر بلوك هو صندوق مكوّن من أربع طبقات من الداخل للخارج: المحتوى، الحشوة، الحد، ثم الهامش.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الطبقة</th><th>الخاصية</th><th>الوصف</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Content</td><td>width / height</td><td>المحتوى نفسه</td></tr>
+                <tr><td>Padding</td><td>padding</td><td>مسافة داخلية بين المحتوى والحد</td></tr>
+                <tr><td>Border</td><td>border</td><td>الإطار حول الحشوة</td></tr>
+                <tr><td>Margin</td><td>margin</td><td>مسافة خارجية بين العنصر وجيرانه</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="example"><div class="demo"><label>margin <input type="range" id="bm-m" min="0" max="40" value="16"></label><label>border <input type="range" id="bm-b" min="0" max="12" value="2"></label><label>padding <input type="range" id="bm-p" min="0" max="40" value="20"></label></div><div class="demo-stage"><div id="bm-o" style="background:#fde3b5;display:inline-block"><div id="bm-i" style="border:2px solid #1e90ff;background:#cfe8ff"><div class="d-box">المحتوى</div></div></div><div class="demo-out" id="bm-t"></div></div></div>
+          <pre data-lang="css">.box {
+  padding: 20px;
+  border: 2px solid #ddd;
+  margin: 16px;
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>الاختصار والاتجاهات</h3>
+          <p class="desc">عند كتابة قيمة واحدة تُطبّق على الجهات الأربع. قيمتان: عمودي ثم أفقي. ثلاث: أعلى ثم أفقي ثم أسفل. أربع: أعلى، يمين، أسفل، يسار.</p>
+          <pre data-lang="css">.a { margin: 10px; }
+.b { margin: 10px 20px; }
+.c { margin: 10px 20px 30px; }
+.d { margin: 10px 20px 30px 40px; }</pre>
+        </div>
+      </section>
+
+      <section id="css-sizing">
+        <h2>الأبعاد و box-sizing</h2>
+
+        <div class="tag">
+          <h3>الخصائص الأساسية</h3>
+          <pre data-lang="css">.box {
+  width: 300px;
+  height: 150px;
+  min-width: 200px;
+  max-width: 100%;
+  min-height: 100px;
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>content-box مقابل border-box</h3>
+          <p class="desc">افتراضياً يحسب المتصفح العرض على المحتوى فقط (<code>content-box</code>)، مما يجعل الصندوق أكبر فمحمداً عند إضافة حشوة أو حد. مع <code>border-box</code> يصبح العرض شاملاً للحشوة والحد، وهو السلوك الأكثر منطقية.</p>
+          <pre data-lang="css">* { box-sizing: border-box; }
+.box {
+  width: 300px;
+  padding: 20px;
+  border: 5px solid #1e90ff;
+}</pre>
+          <div class="notes"><strong>أفضل ممارسة:</strong> طبّق <code>box-sizing: border-box</code> على كل العناصر في بداية التنسيق لتتوقّع الأبعاد بدقة.</div>
+        </div>
+      </section>
+
+      <section id="css-typography">
+        <h2>الطباعة والتنسيق النصي</h2>
+
+        <div class="tag">
+          <h3>الخط والقياس</h3>
+          <pre data-lang="css">body {
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: 0.2px;
+  word-spacing: 1px;
+}</pre>
+          <p class="desc">أعطِ دائماً قائمة بخطوط بديلة احتياطية، فاجعل آخر عنصر في القائمة اسم عائلة عامة مثل <code>sans-serif</code> (بدون علامات اقتباس) لتُستخدم عند غياب الخطوط الأخرى.</p>
+        </div>
+
+        <div class="tag">
+          <h3>محاذاة النص وتزيينه</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الخاصية</th><th>القيم الشائعة</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>text-align</code></td><td>right, left, center, justify</td></tr>
+                <tr><td><code>text-decoration</code></td><td>none, underline, line-through</td></tr>
+                <tr><td><code>text-transform</code></td><td>uppercase, lowercase, capitalize</td></tr>
+                <tr><td><code>text-shadow</code></td><td>2px 2px 4px rgba(0,0,0,.4)</td></tr>
+                <tr><td><code>text-indent</code></td><td>إزاحة السطر الأول</td></tr>
+                <tr><td><code>line-height</code></td><td>ارتفاع السطر</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">.title {
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: underline;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}</pre>
+        </div>
+      </section>
+
+      <section id="css-display">
+        <h2>display و visibility</h2>
+
+        <div class="tag">
+          <h3>قيم display الشهيرة</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>القيمة</th><th>السلوك</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>block</code></td><td>يشغل سطراً كاملاً ويقبل العرض والحشوة</td></tr>
+                <tr><td><code>inline</code></td><td>يجري مع النص ولا يقبل العرض والارتفاع</td></tr>
+                <tr><td><code>inline-block</code></td><td>يجري مع النص لكن يقبل الأبعاد</td></tr>
+                <tr><td><code>none</code></td><td>يُخفي العنصر تماماً ويزيله من التخطيط</td></tr>
+                <tr><td><code>flex</code></td><td>يحوّل العنصر إلى حاوية مرنة</td></tr>
+                <tr><td><code>grid</code></td><td>يحوّل العنصر إلى حاوية شبكية</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">.menu li { display: inline-block; }
+.hidden { display: none; }
+.flex-row { display: flex; }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>display:none مقابل visibility:hidden</h3>
+          <p class="desc">الأول يُزيل العنصر من التخطيط ولا يشغل مساحة، والثاني يُخفيه لكنه يُبقي مكانه فارغاً.</p>
+          <pre data-lang="css">.gone { display: none; }
+.invisible { visibility: hidden; }</pre>
+        </div>
+      </section>
+
+      <section id="css-position">
+        <h2>التمركز (position)</h2>
+
+        <div class="tag">
+          <h3>القيم الخمس</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>القيمة</th><th>الوصف</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>static</code></td><td>الافتراضي، يتبع التدفق الطبيعي</td></tr>
+                <tr><td><code>relative</code></td><td>ينزاح من موضعه الأصلي مع الحفاظ على مكانه</td></tr>
+                <tr><td><code>absolute</code></td><td>يخرج من التدفق ويتمركز بالنسبة لأقرب أب مُمركز</td></tr>
+                <tr><td><code>fixed</code></td><td>يثبت بالنسبة لنافذة العرض ولا يتحرك مع التمرير</td></tr>
+                <tr><td><code>sticky</code></td><td>يتصرف كـ relative ثم يلتصق عند حد معين</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">.card { position: relative; }
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>خصائص الإزاحة</h3>
+          <p class="desc">تُستخدم <code>top</code> و<code>right</code> و<code>bottom</code> و<code>left</code> مع أي قيمة غير static لتحريك العنصر. للتوسيط الكامل استخدم <code>inset: 0</code> مع <code>margin: auto</code>.</p>
+          <pre data-lang="css">.center {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 200px;
+  height: 120px;
+}</pre>
+        </div>
+      </section>
+
+      <section id="css-stacking">
+        <h2>التراكب (z-index) وسياق التكديس</h2>
+
+        <div class="tag">
+          <h3>كيف يعمل z-index؟</h3>
+          <p class="desc">يحدد ترتيب تراكب العناصر فوق بعضها. يعمل فقط مع العناصر المُمركزة (غير static). القيمة الأعلى تظهر فوق الأقل.</p>
+          <pre data-lang="css">.modal { position: fixed; z-index: 1000; }
+.overlay { position: fixed; z-index: 900; }
+.tooltip { position: absolute; z-index: 1100; }</pre>
+        </div>
+
+        <div class="notes"><strong>سياق التكديس:</strong> عند إعطاء عنصر أب <code>z-index</code> مع position، يُنشئ سياقاً جديداً؛ فلا يستطيع أبناؤه تجاوز عناصر خارج هذا السياق مهما ارتفع الـ z-index الخاص بهم.</div>
+      </section>
+
+      <section id="css-overflow">
+        <h2>overflow</h2>
+
+        <div class="tag">
+          <h3>التحكم بالمحتوى الفائض</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>القيمة</th><th>الوصف</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>visible</code></td><td>يظهر الفائض خارج الصندوق (الافتراضي)</td></tr>
+                <tr><td><code>hidden</code></td><td>يُقص الفائض</td></tr>
+                <tr><td><code>scroll</code></td><td>يُضيف أشرطة تمرير دائماً</td></tr>
+                <tr><td><code>auto</code></td><td>أشرطة تمرير عند الحاجة فقط</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">.scroll-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>قص النصّ</h3>
+          <p class="desc">لإضافة «...» لنص طويل في سطر واحد، اجمع بين ثلاث خصائص.</p>
+          <pre data-lang="css">.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}</pre>
+        </div>
+      </section>
+
+      <section id="css-flexbox">
+        <h2>Flexbox</h2>
+
+        <div class="tag">
+          <h3>خصائص الحاوية</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الخاصية</th><th>القيم الشائعة</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>display</code></td><td>flex | inline-flex</td></tr>
+                <tr><td><code>flex-direction</code></td><td>row | column | row-reverse | column-reverse</td></tr>
+                <tr><td><code>flex-wrap</code></td><td>nowrap | wrap | wrap-reverse</td></tr>
+                <tr><td><code>justify-content</code></td><td>flex-start | center | space-between | space-around | space-evenly</td></tr>
+                <tr><td><code>align-items</code></td><td>stretch | center | flex-start | flex-end | baseline</td></tr>
+                <tr><td><code>align-content</code></td><td>عند وجود أسطر متعددة</td></tr>
+                <tr><td><code>gap</code></td><td>المسافة بين العناصر</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="example"><div class="demo"><label>justify-content <select id="fx-j"><option>flex-start</option><option>center</option><option>flex-end</option><option>space-between</option><option>space-around</option><option>space-evenly</option></select></label><label>align-items <select id="fx-a"><option>stretch</option><option>center</option><option>flex-start</option><option>flex-end</option></select></label><label>flex-direction <select id="fx-d"><option>row</option><option>column</option></select></label></div><div class="demo-stage"><div class="d-flex" id="fx"><div class="d-box">1</div><div class="d-box">2</div><div class="d-box">3</div></div><div class="demo-out" id="fx-t"></div></div></div>
+          <pre data-lang="css">.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>خصائص العناصر</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الخاصية</th><th>الوصف</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>flex-grow</code></td><td>قدرة العنصر على التمدد لملء المساحة</td></tr>
+                <tr><td><code>flex-shrink</code></td><td>قدرة العنصر على التقلص عند ضيق المساحة</td></tr>
+                <tr><td><code>flex-basis</code></td><td>الحجم الأساسي قبل التمدد</td></tr>
+                <tr><td><code>flex</code></td><td>اختصار للثلاثة: grow shrink basis</td></tr>
+                <tr><td><code>order</code></td><td>ترتيب ظهور العنصر</td></tr>
+                <tr><td><code>align-self</code></td><td>محاذاة عنصر واحد على المحور العرضي</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">.grow { flex: 1; }
+.sidebar { flex: 0 0 250px; }
+.priority { order: -1; }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>التوسيط الكامل</h3>
+          <p class="desc">أسهل طريقة لتوسيط عنصر أفقياً وعمودياً في آنٍ واحد.</p>
+          <pre data-lang="css">.center-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}</pre>
+        </div>
+      </section>
+
+      <section id="css-grid">
+        <h2>CSS Grid</h2>
+
+        <div class="tag">
+          <h3>الأساسيات</h3>
+          <p class="desc">نظام تخطيط ثنائي الأبعاد (صفوف وأعمدة) يتفوق على Flexbox في تخطيط الصفحات الكاملة.</p>
+          <div class="example"><div class="demo"><label>الأعمدة <input type="range" id="gd-c" min="1" max="5" value="3"></label><label>gap <input type="range" id="gd-g" min="0" max="30" value="8"></label></div><div class="demo-stage"><div class="d-grid" id="gd"><div class="d-box">1</div><div class="d-box">2</div><div class="d-box">3</div><div class="d-box">4</div><div class="d-box">5</div><div class="d-box">6</div></div><div class="demo-out" id="gd-t"></div></div></div>
+          <pre data-lang="css">.grid {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 16px;
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>repeat و minmax و auto-fit</h3>
+          <p class="desc">لبناء شبكة متجاوبة تلقائياً دون كتابة Media Queries.</p>
+          <pre data-lang="css">.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}</pre>
+          <p class="desc">هذا يعني: كرّر أعمدة بعرض لا يقل عن 240 بكسل ولا يزيد عن نسبة متساوية، فتلتفّ البطاقات تلقائياً حسب عرض الشاشة.</p>
+        </div>
+
+        <div class="tag">
+          <h3>وضع العناصر و areas</h3>
+          <pre data-lang="css">.layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-areas:
+    "side top"
+    "side main";
+}
+.sidebar { grid-area: side; }
+.top { grid-area: top; }
+.main { grid-area: main; }</pre>
+          <p class="desc">يمكن أيضاً استخدام <code>grid-column: 1 / 3</code> لتمديد العنصر عبر عمودين.</p>
+        </div>
+      </section>
+
+      <section id="css-pseudo">
+        <h2>الفئات والعناصر الزائفة</h2>
+
+        <div class="tag">
+          <h3>الفئات الزائفة (Pseudo-classes)</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الفئة</th><th>الوصف</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>:hover</code></td><td>عند مرور المؤشر</td></tr>
+                <tr><td><code>:focus</code></td><td>عند التركيز بالكيبورد أو النقر</td></tr>
+                <tr><td><code>:first-child</code></td><td>أول ابن</td></tr>
+                <tr><td><code>:nth-child(n)</code></td><td>الابن رقم n، ويدعم even و odd</td></tr>
+                <tr><td><code>:not(selector)</code></td><td>كل العناصر ما عدا محدداً معيناً</td></tr>
+                <tr><td><code>:checked</code></td><td>خانة اختيار محددة</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">tr:nth-child(even) { background: #f8f9fa; }
+input:focus { border-color: #1e90ff; }
+.menu li:not(:last-child) { border-bottom: 1px solid #eee; }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>العناصر الزائفة (Pseudo-elements)</h3>
+          <p class="desc">تنشئ أجزاءً وهمية داخل العنصر مثل <code>::before</code> و<code>::after</code>، ويجب تحديد <code>content</code> ليعملوا.</p>
+          <pre data-lang="css">.badge::after {
+  content: "!";
+  color: red;
+}
+.quote::before {
+  content: "\201C";
+  font-size: 2em;
+}
+p::first-line { font-weight: bold; }</pre>
+        </div>
+      </section>
+
+      <section id="css-transitions">
+        <h2>الانتقالات (Transitions)</h2>
+
+        <div class="tag">
+          <h3>الخصائص الأربع</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الخاصية</th><th>الوصف</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>transition-property</code></td><td>الخاصية التي ستتغيّر</td></tr>
+                <tr><td><code>transition-duration</code></td><td>مدة الانتقال</td></tr>
+                <tr><td><code>transition-timing-function</code></td><td>منحنى السرعة (ease, linear, ease-in-out)</td></tr>
+                <tr><td><code>transition-delay</code></td><td>تأخير البدء</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="example"><div class="demo"><label>مدة الانتقال <select id="ts-d"><option>0.1s</option><option>0.3s</option><option>1s</option><option>2s</option></select></label><button type="button" class="d-hover" id="ts-b">مرّر الماوس فوقي</button></div></div>
+          <pre data-lang="css">.btn {
+  background: #1e90ff;
+  transition: background 0.3s ease, transform 0.2s;
+}
+.btn:hover {
+  background: #0d6efd;
+  transform: translateY(-2px);
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>اختصار متعدد</h3>
+          <pre data-lang="css">.card {
+  transition: 0.3s ease-in-out;
+}</pre>
+          <p class="desc">كتابة <code>transition</code> بدون تحديد الخاصية تطبّق الانتقال على كل الخصائص القابلة للتحريك، وهو سلوك مقبول لكن تحديد الخصائص أفضل للأداء.</p>
+        </div>
+      </section>
+
+      <section id="css-transforms">
+        <h2>التحويلات (Transforms)</h2>
+
+        <div class="tag">
+          <h3>الدوال الشائعة</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الدالة</th><th>التأثير</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>translate(x, y)</code></td><td>إزاحة العنصر</td></tr>
+                <tr><td><code>scale(n)</code></td><td>تكبير أو تصغير</td></tr>
+                <tr><td><code>rotate(deg)</code></td><td>تدوير بزاوية</td></tr>
+                <tr><td><code>skew(x, y)</code></td><td>إمالة</td></tr>
+                <tr><td><code>translate3d(x, y, z)</code></td><td>إزاحة ثلاثية الأبعاد</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="example"><div class="demo"><label>rotate <input type="range" id="tr-r" min="-180" max="180" value="0"></label><label>scale <input type="range" id="tr-s" min="50" max="200" value="100"></label><label>translateX <input type="range" id="tr-x" min="-60" max="60" value="0"></label></div><div class="demo-stage"><div class="d-box" id="tr-b" style="width:90px;margin:24px auto">صندوق</div><div class="demo-out" id="tr-t"></div></div></div>
+          <pre data-lang="css">.zoom:hover { transform: scale(1.05); }
+.rotate { transform: rotate(45deg); }
+.move { transform: translate(20px, -10px); }
+.spin { transform: rotate(180deg) scale(1.2); }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>نقطة التحويل</h3>
+          <pre data-lang="css">.card {
+  transform: rotate(15deg);
+  transform-origin: top right;
+}</pre>
+          <p class="desc">تحدد <code>transform-origin</code> النقطة التي يدور أو يتوسّع حولها العنصر، وقيمتها الافتراضية المركز.</p>
+        </div>
+      </section>
+
+      <section id="css-animations">
+        <h2>الحركات (Animations) و keyframes</h2>
+
+        <div class="tag">
+          <h3>تعريف حركة</h3>
+          <p class="desc">تُعرّف الحركة عبر <code>@keyframes</code> ثم تُستدعى بخصائص <code>animation</code>.</p>
+          <div class="example"><div class="demo"><button type="button" id="an-btn">إيقاف / تشغيل</button></div><div class="demo-stage"><div class="d-box d-anim" id="an-b">pulse</div></div></div>
+          <pre data-lang="css">@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.loader {
+  animation: pulse 1.2s infinite ease-in-out;
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>خصائص animation</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الخاصية</th><th>الوصف</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>animation-name</code></td><td>اسم الحركة المعرّفة</td></tr>
+                <tr><td><code>animation-duration</code></td><td>مدة الدورة</td></tr>
+                <tr><td><code>animation-iteration-count</code></td><td>عدد التكرارات أو infinite</td></tr>
+                <tr><td><code>animation-direction</code></td><td>normal, reverse, alternate</td></tr>
+                <tr><td><code>animation-fill-mode</code></td><td>حالة العنصر قبل وبعد الحركة</td></tr>
+                <tr><td><code>animation-play-state</code></td><td>running أو paused</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="notes"><strong>احترام المستخدم:</strong> أوقف الحركات لمن يفضّل تقليلها عبر <code>@media (prefers-reduced-motion: reduce)</code>.</div>
+      </section>
+
+      <section id="css-variables">
+        <h2>متغيرات CSS (Custom Properties)</h2>
+
+        <div class="tag">
+          <h3>التعريف والاستخدام</h3>
+          <p class="desc">تسمح بتخزين قيم قابلة لإعادة الاستخدام والتغيير من مكان واحد، وتُعرّف باسم يبدأ بشرطتين وتُقرأ بواسطة <code>var()</code>.</p>
+          <pre data-lang="css">:root {
+  --primary: #1e90ff;
+  --radius: 10px;
+  --space: 16px;
+}
+.button {
+  background: var(--primary);
+  border-radius: var(--radius);
+  padding: var(--space);
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>القيمة الاحتياطية والنطاق</h3>
+          <pre data-lang="css">.note {
+  color: var(--text, #333);
+}
+.card {
+  --primary: #6c5ce7;
+  background: var(--primary);
+}</pre>
+          <p class="desc">القيمة الثانية في <code>var()</code> هي الاحتياطية عند عدم تعريف المتغير، ويمكن إعادة تعريف المتغير داخل نطاق عنصر ليتغير تلقائياً في أبنائه.</p>
+        </div>
+      </section>
+
+      <section id="css-effects">
+        <h2>الظلال والفلاتر والتأثيرات</h2>
+
+        <div class="tag">
+          <h3>الظلال</h3>
+          <pre data-lang="css">.card { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); }
+.title { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); }
+.inset { box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); }</pre>
+          <p class="desc">ترتيب <code>box-shadow</code>: الإزاحة الأفقية، العمودية، التمويه، الانتشار، اللون.</p>
+        </div>
+
+        <div class="tag">
+          <h3>الفلاتر (filter)</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الدالة</th><th>التأثير</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>blur(px)</code></td><td>تمويه</td></tr>
+                <tr><td><code>brightness(n)</code></td><td>زيادة أو تقليل السطوع</td></tr>
+                <tr><td><code>grayscale(n)</code></td><td>تحويل لتدرّج رمادي</td></tr>
+                <tr><td><code>contrast(n)</code></td><td>تعديل التباين</td></tr>
+                <tr><td><code>drop-shadow()</code></td><td>ظل يتبع الشكل الفمحمد</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="example"><div class="demo"><label>blur <input type="range" id="fl-b" min="0" max="10" value="0"></label><label>grayscale <input type="range" id="fl-g" min="0" max="100" value="0"></label><label>box-shadow <input type="range" id="fl-s" min="0" max="40" value="10"></label></div><div class="demo-stage"><div id="fl-x" style="height:80px;width:200px;margin:14px auto;border-radius:12px;background:linear-gradient(45deg,#1e90ff,#ff6b81)"></div><div class="demo-out" id="fl-t"></div></div></div>
+          <pre data-lang="css">.blur { filter: blur(3px); }
+.bw { filter: grayscale(100%); }
+.dim { filter: brightness(0.8) contrast(1.1); }</pre>
+        </div>
+      </section>
+
+      <section id="css-responsive">
+        <h2>التصميم المتجاوب (Media Queries)</h2>
+
+        <div class="tag">
+          <h3>الصياغة الأساسية</h3>
+          <p class="desc">تُطبّق قواعد CSS فقط عند تحقق شرط معين مثل عرض الشاشة. في أسلوب «الجوال أولاً» نكتب الأنماط للجوال ثم نضيف شروطاً للأحجام الأكبر باستخدام <code>min-width</code>.</p>
+          <pre data-lang="css">.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 600px) {
+  .cards { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .cards { grid-template-columns: repeat(3, 1fr); }
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>نقاط التوقف الشائعة</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الجهاز</th><th>عرض الشاشة التقريبي</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>جوال</td><td>أقل من 600px</td></tr>
+                <tr><td>تابلت</td><td>600px إلى 1024px</td></tr>
+                <tr><td>مكتب</td><td>1024px وأكثر</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css">@media (max-width: 768px) {
+  .sidebar { display: none; }
+}
+@media (prefers-color-scheme: dark) {
+  body { background: #121212; color: #eee; }
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>وسائط متجاوبة</h3>
+          <pre data-lang="css">img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}</pre>
+          <p class="desc">هذه القاعدة تجعل كل الصور تتقلص داخل حاوياتها وتُمنع من كسر التخطيط على الشاشات الصغيرة.</p>
+        </div>
+      </section>
+
+      <section id="css-ui-patterns">
+        <h2>أنماط واجهات جاهزة</h2>
+
+        <div class="tag">
+          <h3>زر احترافي</h3>
+          <pre data-lang="css">.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #1e90ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.25s, transform 0.15s;
+}
+.btn:hover { background: #0d6efd; transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>شريط تنقل</h3>
+          <pre data-lang="css">.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1e272e;
+  padding: 0 20px;
+  height: 58px;
+}
+.navbar a {
+  color: #dcdde1;
+  text-decoration: none;
+  padding: 18px 12px;
+}
+.navbar a:hover { color: #1e90ff; }</pre>
+        </div>
+
+        <div class="tag">
+          <h3>بطاقة (Card)</h3>
+          <pre data-lang="css">.card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+.card-body { padding: 18px; }</pre>
+        </div>
+      </section>
+
+      <section id="css-accessibility">
+        <h2>الوصولية (Accessibility) في CSS</h2>
+
+        <div class="tag">
+          <h3>إبراز التركيز</h3>
+          <p class="desc">لا تحذف حلقة التركيز الافتراضية دون بديل واضح، لأن مستخدمي الكيبورد يعتمدون محمدها للتنقل.</p>
+          <pre data-lang="css">a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #1e90ff;
+  outline-offset: 2px;
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>تباين جيد واحترام التفضيلات</h3>
+          <pre data-lang="css">@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms;
+    transition-duration: 0.01ms;
+  }
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}</pre>
+          <p class="desc">استخدم <code>.visually-hidden</code> لإخفاء نصّ بصرياً مع إبقائه متاحاً لقارئات الشاشة مثل عناوين الحقول.</p>
+        </div>
+      </section>
+
+      <section id="css-best-practices">
+        <h2>أفضل الممارسات والصيانة والأداء</h2>
+
+        <div class="tag">
+          <h3>تنظيم الكود</h3>
+          <ul>
+            <li>ضع متغيرات الألوان والمسافات في <code>:root</code> وأعد استخدامها.</li>
+            <li>استخدم أسماء وصفية للكلاسات تعبّر عن الوظيفة مثل <code>.card-body</code> لا عن الشكل مثل <code>.red-box</code>.</li>
+            <li>قلّل الاعتماد على الـ ID و<code>!important</code> في التنسيق.</li>
+            <li>قسّم الأنماط إلى ملفات أو أقسام منطقية: تنسيق عام، مكونات، أدوات مساعدة.</li>
+          </ul>
+        </div>
+
+        <div class="tag">
+          <h3>الأداء</h3>
+          <ul>
+            <li>حرّك خصائص <code>transform</code> و<code>opacity</code> فهي أرخص على المتصفح من <code>width</code> و<code>top</code>.</li>
+            <li>اقصر سلسلة المحددات لتسريع المطابقة.</li>
+            <li>قلّل الـ <code>box-shadow</code> والتمويه الثقيل داخل العناصر المتحركة.</li>
+            <li>استخدم <code>content-visibility</code> أو تقسيم العمل للعناصر البعيدة عن الشاشة عند الحاجة.</li>
+          </ul>
+        </div>
+
+        <div class="notes"><strong>القاعدة الذهبية:</strong> اكتب CSS بسيطاً وقابلاً للقراءة أولاً، ثم حسّن الأداء عند وجود مشكلة حقيقية مقيسة، لا قبل ذلك.</div>
+      </section>
+
+      <section id="css-properties-table">
+        <h2>مرجع سريع: الخصائص الأكثر استخداماً</h2>
+
+        <div class="tag">
+          <h3>جدول شامل</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الخاصية</th><th>الوظيفة</th><th>مثال</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>color</code></td><td>لون النص</td><td><code>color: #333;</code></td></tr>
+                <tr><td><code>background</code></td><td>خلفية العنصر</td><td><code>background: #f1f2f6;</code></td></tr>
+                <tr><td><code>font-size</code></td><td>حجم الخط</td><td><code>font-size: 16px;</code></td></tr>
+                <tr><td><code>font-family</code></td><td>نوع الخط</td><td><code>font-family: Tahoma;</code></td></tr>
+                <tr><td><code>font-weight</code></td><td>سماكة الخط</td><td><code>font-weight: bold;</code></td></tr>
+                <tr><td><code>line-height</code></td><td>ارتفاع السطر</td><td><code>line-height: 1.7;</code></td></tr>
+                <tr><td><code>text-align</code></td><td>محاذاة النص</td><td><code>text-align: center;</code></td></tr>
+                <tr><td><code>width / height</code></td><td>أبعاد العنصر</td><td><code>width: 100%;</code></td></tr>
+                <tr><td><code>margin / padding</code></td><td>مسافات خارجية وداخلية</td><td><code>padding: 12px;</code></td></tr>
+                <tr><td><code>border</code></td><td>إطار العنصر</td><td><code>border: 1px solid #ddd;</code></td></tr>
+                <tr><td><code>border-radius</code></td><td>تدوير الزوايا</td><td><code>border-radius: 8px;</code></td></tr>
+                <tr><td><code>display</code></td><td>طريقة عرض العنصر</td><td><code>display: flex;</code></td></tr>
+                <tr><td><code>position</code></td><td>طريقة التمركز</td><td><code>position: relative;</code></td></tr>
+                <tr><td><code>z-index</code></td><td>ترتيب التراكب</td><td><code>z-index: 10;</code></td></tr>
+                <tr><td><code>overflow</code></td><td>معالجة الفائض</td><td><code>overflow: hidden;</code></td></tr>
+                <tr><td><code>opacity</code></td><td>الشفافية</td><td><code>opacity: 0.8;</code></td></tr>
+                <tr><td><code>box-shadow</code></td><td>ظل الصندوق</td><td><code>box-shadow: 0 4px 12px rgba(0,0,0,.1);</code></td></tr>
+                <tr><td><code>cursor</code></td><td>شكل المؤشر</td><td><code>cursor: pointer;</code></td></tr>
+                <tr><td><code>transition</code></td><td>الانتقال الناعم</td><td><code>transition: 0.3s ease;</code></td></tr>
+                <tr><td><code>transform</code></td><td>تحويل العنصر</td><td><code>transform: scale(1.05);</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="reference" id="ref-js" role="tabpanel" aria-label="مرجع JavaScript" hidden>
+      <h1>مرجع JavaScript الكامل</h1>
+      <p class="page-sub">لغة برمجة الويب التفامحمدة</p>
+      <p class="intro">من المتغيرات والدوال إلى الـ DOM والأحداث والوعود fetch: مرجع عملي مبني على أمثلة حقيقية لبناء صفحات تفامحمدة.</p>
+      <section id="js-intro">
+        <h2>مقدمة إلى JavaScript</h2>
+
+        <div class="tag">
+          <h3>ما هي JavaScript؟</h3>
+          <p class="desc">JavaScript لغة برمجة تُنفَّذ مباشرة داخل المتصفح بلا حاجة إلى ترجمة مسبقة. تتحكم في سلوك الصفحة: تستجيب للنقر والكتابة، تُعدّل HTML و CSS في الوقت الحقيقي، تتحقق من النماذج، وتجلب البيانات من الشبكة.</p>
+          <pre data-lang="js">document.querySelector("h1").addEventListener("click", function () {
+  alert("ضغطت على العنوان!");
+});</pre>
+        </div>
+
+        <div class="tag">
+          <h3>كيف تعمل داخل المتصفح؟</h3>
+          <p class="desc">يمتلك المتصفح محرّك JavaScript ينفّذ الكود سطراً بسطر. يوفّر لك الأخير واجهات جاهزة أهمها الـ DOM للتلاعب بالصفحة، و<code>fetch</code> للشبكة، و<code>localStorage</code> للتخزين.</p>
+          <pre data-lang="html">&lt;script src="app.js" defer&gt;&lt;/script&gt;</pre>
+          <div class="notes"><strong>لماذا defer؟</strong> يجعل المتصفح ينفّذ السكربت بعد بناء الصفحة، فتجد كل عناصر DOM جاهزة دون إبطاء العرض.</div>
+        </div>
+
+        <div class="tag">
+          <h3>أول برنامج</h3>
+          <pre data-lang="js">let name = "ميدو";
+console.log("مرحباً " + name);
+document.body.style.background = "#f1f2f6";</pre>
+        </div>
+      </section>
+
+      <section id="js-syntax">
+        <h2>الصياغة والتمحمدمات</h2>
+
+        <div class="tag">
+          <h3>المبادئ الأساسية</h3>
+          <ul>
+            <li>الكود حسّاس لحالة الأحرف: <code>name</code> و<code>Name</code> متغيّران مختلفان.</li>
+            <li>كل تمحمدمة تُنهى بفاصلة منقوطة، ويفضّل الالتزام بها دائماً لتفادي مفاجآت الإدراج التلقائي.</li>
+            <li>الكتلة تُحاط بأقواس معقوفة <code>{ }</code> وتُستخدم في الدوال والشروط والحلقات.</li>
+            <li>الأسماء المكوّنة من عدة كلمات تُكتب بنمط camelCase مثل <code>userName</code>.</li>
+          </ul>
+        </div>
+
+        <div class="tag">
+          <h3>التمحمدقات في JavaScript</h3>
+          <p class="desc">توجد تمحمدقات السطر الواحد وتمحمدقات الكتل المتعددة الأسطر. تُستخدم لتوضيح الكود، </p>
+          <pre data-lang="js">// تمحمدق سطر واحد
+let a = 1;
+
+/* تمحمدق
+   متعدد الأسطر */
+let b = 2;</pre>
+        </div>
+      </section>
+
+      <section id="js-variables">
+        <h2>المتغيرات: let و const و var</h2>
+
+        <div class="tag">
+          <h3>الفروق الجوهرية</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الكلمة</th><th>إعادة الإسناد</th><th>النطاق</th><th>الاستخدام المفضل</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>const</code></td><td>ممنوعة</td><td>Block</td><td>القيمة الثابتة (الافتراضي)</td></tr>
+                <tr><td><code>let</code></td><td>مسموحة</td><td>Block</td><td>القيمة المتغيرة</td></tr>
+                <tr><td><code>var</code></td><td>مسموحة</td><td>Function</td><td>قديم، يُفضّل تجنّبه</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="js">const pi = 3.14;
+let counter = 0;
+counter = counter + 1;
+
+var oldStyle = "قديم";</pre>
+          <div class="notes"><strong>أفضل ممارسة:</strong> استخدم <code>const</code> افتراضياً، و<code>let</code> عند الحاجة لتغيير القيمة، وتجنّب <code>var</code> لأن نطاقه وظيفي وقد يسبب أخطاء غير متوقعة.</div>
+        </div>
+
+        <div class="tag">
+          <h3>النطاق (Scope) عملياً</h3>
+          <pre data-lang="js">if (true) {
+  let inside = "داخل البلوك";
+  var escaped = "يتسرب خارج البلوك";
+}
+console.log(escaped);</pre>
+          <p class="desc">المتغير <code>inside</code> غير مرئي خارج الأقواس، بينما <code>escaped</code> المتعرّف بـ var يبقى مرئياً في الدالة، وهذا أحد أسباب تجنّب var.</p>
+        </div>
+      </section>
+
+      <section id="js-datatypes">
+        <h2>أنواع البيانات والتحويل</h2>
+
+        <div class="tag">
+          <h3>الأنواع الأولية</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>النوع</th><th>مثال</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>string</code></td><td>"مرحبا" أو 'مرحبا' أو `مرحبا`</td></tr>
+                <tr><td><code>number</code></td><td>42 أو 3.14</td></tr>
+                <tr><td><code>boolean</code></td><td>true أو false</td></tr>
+                <tr><td><code>null</code></td><td>قيمة فارغة متعمّدة</td></tr>
+                <tr><td><code>undefined</code></td><td>غير معرّف بعد</td></tr>
+                <tr><td><code>bigint</code></td><td>1234567890123456789n</td></tr>
+                <tr><td><code>symbol</code></td><td>معرّف فريد</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="js">let title = "درس";
+let price = 19.99;
+let active = true;
+let data = null;
+console.log(typeof title);
+console.log(typeof price);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>التحويل بين الأنواع</h3>
+          <pre data-lang="js">let num = Number("42");
+let text = String(100);
+let flag = Boolean(0);
+let rounded = parseInt("12px", 10);
+let decimal = parseFloat("3.14rem");</pre>
+          <p class="desc">تُستخدم <code>Number</code> و<code>String</code> و<code>Boolean</code> للتحويل الصريح، بينما <code>parseInt</code> و<code>parseFloat</code> يقرآن الرقم من بداية النص ويتجاهلان بقية الأحرف.</p>
+        </div>
+
+        <div class="notes"><strong>خطأ شائع:</strong> <code>typeof null</code> يُرجع <code>"object"</code> وهي مفارقة تاريخية معروفة في اللغة، فتحقّق من null بمقارنة مباشرة <code>x === null</code>.</div>
+      </section>
+
+      <section id="js-operators">
+        <h2>العمليات (Operators)</h2>
+
+        <div class="tag">
+          <h3>الأنواع الشائعة</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الفئة</th><th>الأمثلة</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>حسابية</td><td>+ - * / % **</td></tr>
+                <tr><td>إسناد</td><td>= += -= *= /=</td></tr>
+                <tr><td>مقارنة</td><td>=== !== &gt; &lt; &gt;= &lt;=</td></tr>
+                <tr><td>منطقية</td><td>&amp;&amp; || !</td></tr>
+                <tr><td>زيادة ونقصان</td><td>++ --</td></tr>
+                <tr><td>أخرى</td><td>?? ?. typeof in</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="js">let total = 10 + 5 * 2;
+let same = total === 20;
+let allowed = same &amp;&amp; total &gt; 0;
+let fallback = null ?? "قيمة افتراضية";</pre>
+        </div>
+
+        <div class="tag">
+          <h3>=== مقابل ==</h3>
+          <p class="desc">المشغّل <code>==</code> يقارن بعد تحويل ضمني للنوعين، بينما <code>===</code> يقارن القيمة والنوع معاً. استخدم دائماً <code>===</code> لتجنّب نتائج مفاجئة.</p>
+          <div class="example"><div class="demo"><label>القيمة الأولى: <b>1</b></label><label>القيمة الثانية <select id="eq-s"><option value="n">1 (رقم)</option><option value="s">"1" (نص)</option></select></label></div><div class="demo-out" id="eq-o"></div></div>
+          <pre data-lang="js">console.log(1 == "1");
+console.log(1 === "1");</pre>
+          <p class="desc">السطر الأول يطبع <code>true</code> بسبب التحويل، والثاني يطبع <code>false</code> لأن النوعين مختلفان.</p>
+        </div>
+      </section>
+
+      <section id="js-strings">
+        <h2>النصوص (Strings)</h2>
+
+        <div class="tag">
+          <h3>الدمج والقوالب النصية</h3>
+          <pre data-lang="js">let first = "مرحبا";
+let second = "بك";
+console.log(first + " " + second);
+
+let name = "ميدو";
+let message = `أهلاً ${name}، عدد دروسك ${3 + 2}`;
+console.log(message);</pre>
+          <p class="desc">تسمح القوالب النصية بين علامتي backtick بإدراج المتغيرات والعمليات مباشرة عبر <code>${ }</code>.</p>
+        </div>
+
+        <div class="tag">
+          <h3>الدوال الشائعة للنصوص</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الدالة</th><th>الوظيفة</th><th>مثال</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>length</code></td><td>عدد الأحرف</td><td>"abc".length</td></tr>
+                <tr><td><code>toUpperCase()</code></td><td>تحويل لحروف كبيرة</td><td>"abc".toUpperCase()</td></tr>
+                <tr><td><code>toLowerCase()</code></td><td>تحويل لحروف صغيرة</td><td>"ABC".toLowerCase()</td></tr>
+                <tr><td><code>trim()</code></td><td>حذف المسافات الطرفية</td><td>" hi ".trim()</td></tr>
+                <tr><td><code>includes()</code></td><td>هل يحتوي نصاً معيناً</td><td>"hello".includes("ell")</td></tr>
+                <tr><td><code>replace()</code></td><td>استبدال أول تطابق</td><td>"a-b".replace("-", "+")</td></tr>
+                <tr><td><code>replaceAll()</code></td><td>استبدال كل التطابقات</td><td>"a-b-c".replaceAll("-", "+")</td></tr>
+                <tr><td><code>split()</code></td><td>تقسيم إلى مصفوفة</td><td>"a,b,c".split(",")</td></tr>
+                <tr><td><code>slice()</code></td><td>قص جزء من النص</td><td>"hello".slice(1, 3)</td></tr>
+                <tr><td><code>padStart()</code></td><td>حشو من البداية</td><td>"7".padStart(3, "0")</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="example"><div class="demo"><input type="text" id="st-i" value="  Learn JavaScript  " style="direction:ltr"></div><div class="demo-out" id="st-o"></div></div>
+          <pre data-lang="js">let slug = "  Learn JavaScript  ";
+console.log(slug.trim().toLowerCase());
+console.log("html,css,js".split(","));</pre>
+        </div>
+      </section>
+
+      <section id="js-numbers">
+        <h2>الأرقام والرياضيات</h2>
+
+        <div class="tag">
+          <h3>كائن Math</h3>
+          <pre data-lang="js">console.log(Math.round(4.6));
+console.log(Math.floor(4.9));
+console.log(Math.ceil(4.1));
+console.log(Math.max(3, 8, 1));
+console.log(Math.min(3, 8, 1));
+console.log(Math.random());
+console.log(Math.abs(-5));</pre>
+        </div>
+
+        <div class="tag">
+          <h3>التنسيق والأس</h3>
+          <pre data-lang="js">let price = 1234.5678;
+console.log(price.toFixed(2));
+console.log(2 ** 10);
+console.log(Number.isInteger(price));
+console.log(Number.isNaN(Number("abc")));</pre>
+          <p class="desc">طريقة <code>toFixed(n)</code> تُرجع نصاً بعد تثبيت عدد المنازل العشرية، وهو مفيد لعرض الأسعار.</p>
+        </div>
+
+        <div class="notes"><strong>احترس:</strong> حساب النقاط العشرية قد يعطي نتائج غير دقيقة مثل <code>0.1 + 0.2</code>، لذلك قرّب النتيجة عبر <code>toFixed</code> عند العرض.</div>
+      </section>
+
+      <section id="js-conditions">
+        <h2>الشروط: if و else و switch</h2>
+
+        <div class="tag">
+          <h3>جملة الشرط</h3>
+          <div class="example"><div class="demo"><label>الدرجة <input type="number" id="cd-i" value="85" min="0" max="100"></label></div><div class="demo-out" id="cd-o"></div></div>
+          <pre data-lang="js">let score = 85;
+if (score &gt;= 90) {
+  console.log("ممتاز");
+} else if (score &gt;= 75) {
+  console.log("جيد جداً");
+} else {
+  console.log("يحتاج تحسين");
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>المشغّل الثلاثي</h3>
+          <pre data-lang="js">let age = 20;
+let status = age &gt;= 18 ? "بالغ" : "قاصر";
+console.log(status);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>switch</h3>
+          <pre data-lang="js">let day = "السبت";
+switch (day) {
+  case "الجمعة":
+  case "السبت":
+    console.log("عطلة");
+    break;
+  default:
+    console.log("يوم عمل");
+}</pre>
+          <p class="desc">لا تنسَ <code>break</code> بعد كل حالة، وإلا ستنفّذ الحالات التالية تلقائياً.</p>
+        </div>
+      </section>
+
+      <section id="js-loops">
+        <h2>الحلقات (Loops)</h2>
+
+        <div class="tag">
+          <h3>for التقليدية</h3>
+          <div class="example"><div class="demo"><label>العدد <input type="number" id="lp-i" value="5" min="1" max="10"></label><button type="button" id="lp-b">شغّل الحلقة</button></div><div class="demo-out" id="lp-o"></div></div>
+          <pre data-lang="js">for (let i = 0; i &lt; 5; i++) {
+  console.log("الرقم " + i);
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>while و do while</h3>
+          <pre data-lang="js">let n = 0;
+while (n &lt; 3) {
+  console.log(n);
+  n++;
+}
+
+let m = 0;
+do {
+  console.log(m);
+  m++;
+} while (m &lt; 3);</pre>
+          <p class="desc">حلقة <code>do while</code> تُنفّذ المحتوى مرة واحدة على الأقل حتى لو كان الشرط غير محقق من البداية.</p>
+        </div>
+
+        <div class="tag">
+          <h3>for...of و for...in</h3>
+          <pre data-lang="js">let langs = ["HTML", "CSS", "JS"];
+for (const lang of langs) {
+  console.log(lang);
+}
+
+let user = { name: "ميدو", role: "مطوّر" };
+for (const key in user) {
+  console.log(key, user[key]);
+}</pre>
+          <p class="desc"><code>for...of</code> يعطي القيم مباشرة ويُستخدم مع المصفوفات والنصوص، بينما <code>for...in</code> يعطي أسماء الخصائص ويُستخدم مع الكائنات.</p>
+        </div>
+      </section>
+
+      <section id="js-functions">
+        <h2>الدوال (Functions)</h2>
+
+        <div class="tag">
+          <h3>الطرق الثلاث للتعريف</h3>
+          <pre data-lang="js">function add(a, b) {
+  return a + b;
+}
+
+const multiply = function (a, b) {
+  return a * b;
+};
+
+const divide = (a, b) =&gt; a / b;</pre>
+        </div>
+
+        <div class="tag">
+          <h3>القيم الافتراضية والمعاملات</h3>
+          <pre data-lang="js">function greet(name = "ضيف", greeting = "مرحباً") {
+  return `${greeting} ${name}`;
+}
+console.log(greet());
+console.log(greet("ميدو"));
+
+function sumAll(...numbers) {
+  return numbers.reduce((total, n) =&gt; total + n, 0);
+}
+console.log(sumAll(1, 2, 3, 4));</pre>
+          <p class="desc">معامل <code>...</code> المسمّى rest يجمع بقية القيم في مصفوفة.</p>
+        </div>
+
+        <div class="tag">
+          <h3>الدوال كقيم (Callbacks)</h3>
+          <pre data-lang="js">function runTask(task) {
+  task();
+}
+runTask(function () {
+  console.log("تم التنفيذ");
+});</pre>
+        </div>
+      </section>
+
+      <section id="js-scope">
+        <h2>النطاق (Scope) والإغلاقات</h2>
+
+        <div class="tag">
+          <h3>أنواع النطاق</h3>
+          <ul>
+            <li><strong>Global:</strong> متغيّر معرّف في المستوى الأعلى ومرئي في كل مكان.</li>
+            <li><strong>Function:</strong> متغيّر داخل دالة لا يُرى خارجها.</li>
+            <li><strong>Block:</strong> متغيّر داخل <code>{ }</code> مع let وconst.</li>
+          </ul>
+          <pre data-lang="js">let global = "عام";
+function show() {
+  let local = "محلي";
+  console.log(global, local);
+}
+show();</pre>
+        </div>
+
+        <div class="tag">
+          <h3>الإغلاق (Closure)</h3>
+          <p class="desc">الدالة تتذكّر متغيرات النطاق الذي وُلدت فيه حتى بعد انتهاء تنفيذه.</p>
+          <pre data-lang="js">function makeCounter() {
+  let count = 0;
+  return function () {
+    count++;
+    return count;
+  };
+}
+const next = makeCounter();
+console.log(next());
+console.log(next());</pre>
+        </div>
+      </section>
+
+      <section id="js-arrays">
+        <h2>المصفوفات (Arrays)</h2>
+
+        <div class="tag">
+          <h3>الإنشاء والوصول</h3>
+          <pre data-lang="js">let fruits = ["تفاح", "موز", "برتقال"];
+console.log(fruits[0]);
+console.log(fruits.length);
+fruits.push("عنب");
+fruits.unshift("مانجو");
+console.log(fruits);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>دوال التعديل والبحث</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الدالة</th><th>الوظيفة</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>push / pop</code></td><td>إضافة/حذف من النهاية</td></tr>
+                <tr><td><code>shift / unshift</code></td><td>حذف/إضافة من البداية</td></tr>
+                <tr><td><code>splice</code></td><td>حذف أو إدراج في موضع</td></tr>
+                <tr><td><code>slice</code></td><td>نسخ جزء دون تعديل الأصل</td></tr>
+                <tr><td><code>indexOf / includes</code></td><td>البحث عن عنصر</td></tr>
+                <tr><td><code>join</code></td><td>دمج العناصر في نص</td></tr>
+                <tr><td><code>reverse</code></td><td>عكس الترتيب</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="js">let nums = [1, 2, 3, 4, 5];
+console.log(nums.slice(1, 3));
+console.log(nums.includes(3));
+nums.splice(1, 1);
+console.log(nums);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>دوال التكرار (Iteration)</h3>
+          <div class="example"><div class="demo"><label>الأسعار <input type="text" id="ar-i" value="100,200,300" style="direction:ltr"></label><label>الحد <input type="number" id="ar-t" value="150"></label></div><div class="demo-out" id="ar-o"></div></div>
+          <pre data-lang="js">let prices = [100, 200, 300];
+let withTax = prices.map((p) =&gt; p * 1.15);
+let expensive = prices.filter((p) =&gt; p &gt; 150);
+let total = prices.reduce((sum, p) =&gt; sum + p, 0);
+let found = prices.find((p) =&gt; p === 200);
+console.log(withTax, expensive, total, found);</pre>
+          <p class="desc"><code>map</code> تحوّل كل عنصر، <code>filter</code> تُبقي المطابق، <code>reduce</code> تجمع النتائج في قيمة واحدة، و<code>find</code> تُرجع أول تطابق.</p>
+        </div>
+      </section>
+
+      <section id="js-objects">
+        <h2>الكائنات (Objects)</h2>
+
+        <div class="tag">
+          <h3>الخصائص والدوال</h3>
+          <pre data-lang="js">let user = {
+  name: "ميدو",
+  age: 25,
+  greet() {
+    return `مرحباً ${this.name}`;
+  }
+};
+console.log(user.name);
+console.log(user.greet());
+user.city = "القاهرة";
+console.log(user["city"]);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>التفكيك (Destructuring) والنشر (Spread)</h3>
+          <pre data-lang="js">let book = { title: "الويب", pages: 300 };
+let { title, pages } = book;
+console.log(title, pages);
+
+let updated = { ...book, pages: 350 };
+let { title: name, ...rest } = updated;
+console.log(name, rest);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>الدوال المساعدة على الكائنات</h3>
+          <pre data-lang="js">let settings = { theme: "dark", lang: "ar" };
+console.log(Object.keys(settings));
+console.log(Object.values(settings));
+console.log(Object.entries(settings));
+console.log(Object.assign({}, settings, { lang: "en" }));</pre>
+        </div>
+      </section>
+
+      <section id="js-set-map">
+        <h2>Set و Map وبنى بيانات أخرى</h2>
+
+        <div class="tag">
+          <h3>Set للقيم الفريدة</h3>
+          <pre data-lang="js">let ids = new Set([1, 2, 2, 3, 3, 3]);
+ids.add(4);
+console.log(ids.size);
+console.log(ids.has(2));
+console.log([...ids]);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>Map للأزواج مفتاح/قيمة</h3>
+          <pre data-lang="js">let scores = new Map();
+scores.set("محمد", 90);
+scores.set("مريم", 95);
+console.log(scores.get("محمد"));
+console.log(scores.has("مريم"));
+for (const [key, value] of scores) {
+  console.log(key, value);
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>WeakMap والمصفوفات المُنمَّطة (Typed Arrays)</h3>
+          <p class="desc">تُستخدم <code>WeakMap</code> لحفظ بيانات مرتبطة بعناصر دون منع جمعها للقمامة، بينما المصفوفات المُنمَّطة مثل <code>Int8Array</code> و<code>Float32Array</code> تتعامل مع الأرقام الثنائية في معالجة الرسوم والصوت.</p>
+          <pre data-lang="js">let buffer = new Float32Array(4);
+buffer[0] = 1.5;
+console.log(buffer.length);</pre>
+        </div>
+      </section>
+
+      <section id="js-json">
+        <h2>JSON والعمل مع البيانات المنظمة</h2>
+
+        <div class="tag">
+          <h3>التحويل بين النص والكائن</h3>
+          <pre data-lang="js">let obj = { name: "ميدو", skills: ["HTML", "JS"] };
+let jsonText = JSON.stringify(obj);
+console.log(jsonText);
+
+let parsed = JSON.parse(jsonText);
+console.log(parsed.skills[1]);</pre>
+          <p class="desc">صيغة JSON تشبه الكائنات لكن أسماء الخصائص فيها بين علامات اقتباس مزدوجة دائماً، وهي الصيغة القياسية لتبادل البيانات بين الواجهة والخادم.</p>
+        </div>
+
+        <div class="tag">
+          <h3>معالجة البيانات بأمان</h3>
+          <pre data-lang="js">let raw = `{"price": "129.5", "active": "true"}`;
+let data = JSON.parse(raw);
+let price = Number(data.price);
+console.log(price, data.active === "true");</pre>
+        </div>
+      </section>
+
+      <section id="js-errors">
+        <h2>الأخطاء و try/catch</h2>
+
+        <div class="tag">
+          <h3>التقاط الأخطاء</h3>
+          <pre data-lang="js">try {
+  let data = JSON.parse("نص غير صالح");
+  console.log(data);
+} catch (error) {
+  console.log("حدث خطأ:", error.message);
+} finally {
+  console.log("تنتهي دائماً");
+}</pre>
+        </div>
+
+        <div class="tag">
+          <h3>رمي الأخطاء المخصّصة</h3>
+          <pre data-lang="js">function withdraw(balance, amount) {
+  if (amount &gt; balance) {
+    throw new Error("الرصيد غير كافٍ");
+  }
+  return balance - amount;
+}
+
+try {
+  withdraw(100, 500);
+} catch (e) {
+  console.log(e.name + ": " + e.message);
+}</pre>
+        </div>
+
+        <div class="notes"><strong>أفضل ممارسة:</strong> التقط الأخطاء التي تعرف كيف تعالجها فقط، ولا تستخدم catch فارغاً يتجاهل المشكلة دون تسجيلها.</div>
+      </section>
+
+      <section id="js-dom-select">
+        <h2>تحديد عناصر DOM</h2>
+
+        <div class="tag">
+          <h3>أدوات الاختيار</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الأداة</th><th>تُرجع</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>getElementById</code></td><td>عنصراً واحداً بالمعرّف</td></tr>
+                <tr><td><code>querySelector</code></td><td>أول عنصر يطابق المحدد</td></tr>
+                <tr><td><code>querySelectorAll</code></td><td>كل العناصر المطابقة (NodeList)</td></tr>
+                <tr><td><code>getElementsByClassName</code></td><td>عناصر بنفس الكلاس</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="js">let title = document.querySelector(".title");
+let items = document.querySelectorAll(".menu li");
+items.forEach((item) =&gt; console.log(item.textContent));</pre>
+        </div>
+
+        <div class="tag">
+          <h3>التنقل في الشجرة</h3>
+          <pre data-lang="js">let card = document.querySelector(".card");
+console.log(card.parentElement);
+console.log(card.children);
+console.log(card.firstElementChild);
+console.log(card.nextElementSibling);</pre>
+        </div>
+      </section>
+
+      <section id="js-dom-modify">
+        <h2>تعديل وإنشاء وحذف العناصر</h2>
+
+        <div class="tag">
+          <h3>المحتوى والنصوص</h3>
+          <pre data-lang="js">let box = document.querySelector(".box");
+box.textContent = "نص جديد آمن";
+box.innerHTML = "&lt;strong&gt;نص بوسوم&lt;/strong&gt;";
+box.classList.add("active");
+box.setAttribute("data-state", "ready");</pre>
+          <div class="notes"><strong>تحذير أمني:</strong> لا تمرّر نصاً قادماً من المستخدم إلى <code>innerHTML</code> مباشرة، لأنه يفتح الباب لهجمات حقن السكربت. استخدم <code>textContent</code> للنصوص العادية.</div>
+        </div>
+
+        <div class="tag">
+          <h3>التنسيق المباشر</h3>
+          <pre data-lang="js">box.style.background = "#1e90ff";
+box.style.color = "#fff";
+box.style.padding = "16px";</pre>
+          <p class="desc">تُكتب أسماء خصائص CSS بنمط camelCase عند التحكم بها من JavaScript، فتصبح <code>font-size</code> هي <code>fontSize</code>.</p>
+        </div>
+
+        <div class="tag">
+          <h3>الإنشاء والحذف</h3>
+          <div class="example"><div class="demo"><input type="text" id="dm-i" placeholder="نص العنصر"><button type="button" id="dm-a">إضافة عنصر</button></div><ul id="dm-l"></ul><div class="demo-out">اضغط على أي عنصر لحذفه</div></div>
+          <pre data-lang="js">let list = document.querySelector(".list");
+let li = document.createElement("li");
+li.textContent = "عنصر جديد";
+list.appendChild(li);
+
+li.remove();</pre>
+        </div>
+      </section>
+
+      <section id="js-events">
+        <h2>الأحداث (Events)</h2>
+
+        <div class="tag">
+          <h3>إضافة المستمعين</h3>
+          <div class="example"><div class="demo"><button type="button" id="ev-b">اضغط محمدّ</button><input type="text" id="ev-i" placeholder="اكتب أي مفتاح"></div><div class="demo-out" id="ev-o"></div></div>
+          <pre data-lang="js">let btn = document.querySelector(".save");
+btn.addEventListener("click", function (event) {
+  event.preventDefault();
+  console.log("تم الحفظ");
+});</pre>
+        </div>
+
+        <div class="tag">
+          <h3>أحداث شائعة</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>الحدث</th><th>يقع عندما</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>click</code></td><td>النقر على العنصر</td></tr>
+                <tr><td><code>input</code></td><td>تغيّر قيمة حقل أثناء الكتابة</td></tr>
+                <tr><td><code>submit</code></td><td>إرسال نموذج</td></tr>
+                <tr><td><code>keydown</code></td><td>ضغط مفتاح</td></tr>
+                <tr><td><code>DOMContentLoaded</code></td><td>اكتمال بناء الصفحة</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tag">
+          <h3>الانتشار والتفويض (Delegation)</h3>
+          <p class="desc">تنتقل الأحداث من العنصر نحو الأعلى (bubbling)، ما يتيح ربط مستمع واحد بالأب بدل ربطه بكل ابن.</p>
+          <pre data-lang="js">let menu = document.querySelector(".menu");
+menu.addEventListener("click", function (event) {
+  let item = event.target.closest("a");
+  if (!item) { return; }
+  event.preventDefault();
+  console.log("فتح:", item.textContent);
+});</pre>
+        </div>
+      </section>
+
+      <section id="js-forms">
+        <h2>النماذج والتحقق</h2>
+
+        <div class="tag">
+          <h3>قراءة قيم الحقول</h3>
+          <pre data-lang="js">let form = document.querySelector("#signup");
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  let email = form.elements.email.value.trim();
+  let agree = form.elements.terms.checked;
+  console.log(email, agree);
+});</pre>
+        </div>
+
+        <div class="tag">
+          <h3>التحقق المخصّص</h3>
+          <div class="example"><div class="demo"><input type="text" id="em-i" placeholder="user@site.com" style="direction:ltr"></div><div class="demo-out" id="em-o"></div></div>
+          <pre data-lang="js">function validateEmail(value) {
+  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value);
+}
+console.log(validateEmail("user@site.com"));</pre>
+          <p class="desc">هذا النمط البسيط (regex) يتحقق من الصيغة العامة للبريد، لكنه لا يغني عن التحقق النهائي على الخادم.</p>
+        </div>
+
+        <div class="tag">
+          <h3>استخدام واجهة التحقق المدمجة</h3>
+          <pre data-lang="js">let input = document.querySelector("#email");
+if (!input.checkValidity()) {
+  input.setCustomValidity("صيغة البريد غير صحيحة");
+  input.reportValidity();
+}</pre>
+        </div>
+      </section>
+
+      <section id="js-timers">
+        <h2>المؤقتات وواجهات المتصفح</h2>
+
+        <div class="tag">
+          <h3>setTimeout و setInterval</h3>
+          <div class="example"><div class="demo"><button type="button" id="tm-s">ابدأ العد</button><button type="button" id="tm-x">أوقف</button></div><div class="demo-out" id="tm-o"></div></div>
+          <pre data-lang="js">let timer = setTimeout(function () {
+  console.log("بعد ثانيتين");
+}, 2000);
+
+let cancelled = setTimeout(function () {
+  console.log("لن تُطبع");
+}, 3000);
+clearTimeout(cancelled);
+
+let counter = 0;
+let interval = setInterval(function () {
+  counter++;
+  console.log(counter);
+  if (counter === 5) {
+    clearInterval(interval);
+  }
+}, 1000);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>واجهات متصفح مفيدة</h3>
+          <pre data-lang="js">console.log(window.innerWidth, window.innerHeight);
+console.log(navigator.language);
+console.log(location.href);
+history.back();</pre>
+        </div>
+
+        <div class="notes"><strong>تذكير:</strong> <code>requestAnimationFrame</code> هو الخيار الأفضل للحركات المتزامنة مع معدّل تحديث الشاشة بدلاً من setInterval.</div>
+      </section>
+
+      <section id="js-storage">
+        <h2>التخزين المحلي (Local و Session Storage)</h2>
+
+        <div class="tag">
+          <h3>حفظ البيانات وقراءتها</h3>
+          <pre data-lang="js">localStorage.setItem("theme", "dark");
+console.log(localStorage.getItem("theme"));
+
+sessionStorage.setItem("step", "2");
+console.log(sessionStorage.getItem("step"));
+
+localStorage.removeItem("theme");</pre>
+        </div>
+
+        <div class="tag">
+          <h3>تخزين الكائنات</h3>
+          <pre data-lang="js">let settings = { theme: "dark", lang: "ar" };
+localStorage.setItem("settings", JSON.stringify(settings));
+
+let loaded = JSON.parse(localStorage.getItem("settings"));
+console.log(loaded.theme);</pre>
+          <p class="desc">التخزين يخزّن النصوص فقط، لذلك نستخدم <code>JSON.stringify</code> عند الحفظ و<code>JSON.parse</code> عند القراءة.</p>
+        </div>
+
+        <div class="notes"><strong>المقارنة:</strong> <code>localStorage</code> يبقى حتى يمسحه المستخدم، بينما <code>sessionStorage</code> يُمسح عند إغلاق التبويب. لا تخزّن بيانات حساسة مثل كلمات المرور هناك.</div>
+      </section>
+
+      <section id="js-async">
+        <h2>Promises و async/await</h2>
+
+        <div class="tag">
+          <h3>الوعد (Promise)</h3>
+          <pre data-lang="js">function wait(ms) {
+  return new Promise((resolve) =&gt; {
+    setTimeout(() =&gt; resolve("تم"), ms);
+  });
+}
+
+wait(1000).then((result) =&gt; console.log(result));</pre>
+        </div>
+
+        <div class="tag">
+          <h3>async و await</h3>
+          <pre data-lang="js">async function run() {
+  let first = await wait(500);
+  let second = await wait(500);
+  console.log(first, second);
+}
+run();</pre>
+          <p class="desc">تجعل <code>async/await</code> الكود غير المتزامن يُقرأ كأنه متزامن، و<code>await</code> تنتظر انتهاء الوعد قبل المتابعة.</p>
+        </div>
+
+        <div class="tag">
+          <h3>التوازي ومعالجة الفشل</h3>
+          <pre data-lang="js">async function loadAll() {
+  try {
+    let results = await Promise.all([wait(300), wait(600)]);
+    console.log(results);
+  } catch (error) {
+    console.log("فشل أحد الطلبات");
+  }
+}
+loadAll();</pre>
+        </div>
+      </section>
+
+      <section id="js-fetch">
+        <h2>fetch والطلبات الشبكية</h2>
+
+        <div class="tag">
+          <h3>طلب GET</h3>
+          <pre data-lang="js">async function getUsers() {
+  let response = await fetch("https://jsonplaceholder.typicode.com/users");
+  if (!response.ok) {
+    throw new Error("فشل الطلب");
+  }
+  let users = await response.json();
+  console.log(users[0].name);
+}
+getUsers();</pre>
+        </div>
+
+        <div class="tag">
+          <h3>طلب POST وإرسال بيانات</h3>
+          <pre data-lang="js">async function createPost() {
+  let response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title: "عنوان", body: "محتوى" })
+  });
+  let created = await response.json();
+  console.log(created);
+}
+createPost();</pre>
+        </div>
+
+        <div class="notes"><strong>مهم:</strong> <code>fetch</code> لا يعتبر رموز الحالة 4xx و5xx أخطاءً تلقائياً، لذلك تحقّق من <code>response.ok</code> بنفسك. وتذكّر أن <code>json()</code> تُرجع وعداً آخر يجب انتظاره.</div>
+      </section>
+
+      <section id="js-classes">
+        <h2>الأصناف (Classes) والبرمجة الكائنية</h2>
+
+        <div class="tag">
+          <h3>تعريف صنف</h3>
+          <pre data-lang="js">class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    return `${this.name} يُصدر صوتاً`;
+  }
+}
+
+let cat = new Animal("قطة");
+console.log(cat.speak());</pre>
+        </div>
+
+        <div class="tag">
+          <h3>الوراثة</h3>
+          <pre data-lang="js">class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);
+    this.breed = breed;
+  }
+  speak() {
+    return `${this.name} ينبح`;
+  }
+}
+
+let dog = new Dog("ركس", "شبرد");
+console.log(dog.speak());
+console.log(dog instanceof Animal);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>الحقول والطرق الساكنة والخاصة</h3>
+          <pre data-lang="js">class Wallet {
+  #balance = 0;
+  static currency = "EGP";
+  deposit(amount) {
+    this.#balance += amount;
+    return this.#balance;
+  }
+  static describe() {
+    return "محفظة بالجنيه";
+  }
+}
+console.log(Wallet.describe());</pre>
+          <p class="desc">الحقل <code>#balance</code> خاص لا يمكن الوصول إليه من خارج الصنف، و<code>static</code> يُنسب إلى الصنف نفسه لا إلى نسخة منه.</p>
+        </div>
+
+        <div class="tag">
+          <h3>البروتوتايب (Prototypes)</h3>
+          <p class="desc">الأصناف في الحقيقة طبقة أنيقة فوق نظام البروتوتايب؛ فأي دالة تُضاف إلى <code>prototype</code> تُشارَك بين كل النسخ دون تكرارها في الذاكرة.</p>
+          <pre data-lang="js">function Point(x, y) {
+  this.x = x;
+  this.y = y;
+}
+Point.prototype.distance = function () {
+  return Math.sqrt(this.x ** 2 + this.y ** 2);
+};
+console.log(new Point(3, 4).distance());</pre>
+        </div>
+      </section>
+
+      <section id="js-modules">
+        <h2>الوحدات (Modules)</h2>
+
+        <div class="tag">
+          <h3>التصدير والاستيراد</h3>
+          <pre data-lang="js">export const apiUrl = "https://example.com";
+export function log(msg) {
+  console.log(msg);
+}
+export default class Api {
+  get() {
+    return apiUrl;
+  }
+}</pre>
+          <pre data-lang="js">import Api, { apiUrl, log } from "./api.js";
+log(apiUrl);
+const client = new Api();</pre>
+        </div>
+
+        <div class="tag">
+          <h3>الربط في HTML</h3>
+          <pre data-lang="html">&lt;script type="module" src="app.js"&gt;&lt;/script&gt;</pre>
+          <div class="notes"><strong>ملاحظة:</strong> وحدات ES تعمل عبر بروتوكول http، وقد تمنع سياسة CORS فتحها من نظام الملفات مباشرة، لذا شغّل المشروع عبر خادم محلي عند استخدام الاستيراد بين ملفات.</div>
+        </div>
+      </section>
+
+      <section id="js-es6">
+        <h2>ميزات ES6+ الحديثة</h2>
+
+        <div class="tag">
+          <h3>أبرز الإضافات</h3>
+          <ul>
+            <li><strong>let و const</strong> بنطاق الكتلة.</li>
+            <li><strong>Arrow functions</strong> باختصار وسلوك مختلف للـ this.</li>
+            <li><strong>Template literals</strong> لدمج النصوص.</li>
+            <li><strong>Destructuring</strong> لتفكيك المصفوفات والكائنات.</li>
+            <li><strong>Spread / Rest</strong> للنشر والتجميع.</li>
+            <li><strong>Default parameters</strong> القيم الافتراضية.</li>
+            <li><strong>Optional chaining ?.</strong> و<strong>Nullish ??</strong>.</li>
+            <li><strong>async/await</strong> لتبسيط الوعود.</li>
+          </ul>
+          <pre data-lang="js">let user = { name: "ميدو", address: null };
+console.log(user.address?.city);
+console.log(user.nickname ?? user.name);
+
+let numbers = [1, 2, 3];
+let more = [...numbers, 4, 5];
+console.log(more);</pre>
+        </div>
+
+        <div class="tag">
+          <h3>Array و Object ودوال حديثة</h3>
+          <pre data-lang="js">let all = [[1, 2], [3, 4]];
+console.log(all.flat());
+console.log(Object.fromEntries([["a", 1], ["b", 2]]));
+console.log([3, 1, 2].sort());
+console.log(["a", "b"].at(-1));</pre>
+        </div>
+      </section>
+
+      <section id="js-builtins">
+        <h2>واجهات مدمجة شائعة</h2>
+
+        <div class="tag">
+          <h3>Date</h3>
+          <pre data-lang="js">let now = new Date();
+console.log(now.getFullYear());
+console.log(now.toLocaleDateString("ar-EG"));
+let future = new Date(now.getTime() + 86400000);
+console.log(future.getDate());</pre>
+        </div>
+
+        <div class="tag">
+          <h3>Intl و Math و Number</h3>
+          <pre data-lang="js">let formatter = new Intl.NumberFormat("ar-EG", {
+  style: "currency",
+  currency: "EGP"
+});
+console.log(formatter.format(1250));
+console.log(Math.trunc(4.9));
+console.log(Number.parseInt("08", 10));</pre>
+        </div>
+
+        <div class="tag">
+          <h3>RegExp</h3>
+          <pre data-lang="js">let pattern = /\d+/g;
+console.log("سعر 120 وخصم 20".match(pattern));
+console.log(pattern.test("abc123"));</pre>
+          <p class="desc">التعبيرات النمطية أداة قوية للبحث والتحقق من الأنماط داخل النصوص مثل أرقام الهواتف والبريد.</p>
+        </div>
+      </section>
+
+      <section id="js-debugging">
+        <h2>تصحيح الأخطاء والأداء</h2>
+
+        <div class="tag">
+          <h3>أدوات التصحيح</h3>
+          <ul>
+            <li>افتح لوحة أدوات المطوّر وتبويب Console لمشاهدة الأخطاء.</li>
+            <li>استخدم <code>console.log</code> أو <code>console.table</code> لتتبع القيم.</li>
+            <li>ضع <code>debugger;</code> في الكود لإيقاف التنفيذ عند تلك النقطة.</li>
+            <li>راقب تبويب Network لقياس زمن الطلبات وحجمها.</li>
+          </ul>
+          <pre data-lang="js">console.table([{ name: "ميدو", age: 25 }, { name: "مريم", age: 30 }]);
+debugger;</pre>
+        </div>
+
+        <div class="tag">
+          <h3>تحسين الأداء</h3>
+          <ul>
+            <li>قلّل عمليات الوصول إلى DOM واجمعها في متغيّر واحد.</li>
+            <li>أجّل الأكواد الثقيلة باستخدام التفويض أو التشغيل بعد التحميل.</li>
+            <li>افصل المهام الطويلة إلى أجزاء تجنّباً لتجميد الواجهة.</li>
+            <li>استخدم <code>requestAnimationFrame</code> للحركات.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="js-security">
+        <h2>اعتبارات الأمان</h2>
+
+        <div class="tag">
+          <h3>أهم المخاطر وكيف تتجنّبها</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>المخاطرة</th><th>الوقاية</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>XSS عبر innerHTML</td><td>استخدم textContent أو نظّف المدخلات</td></tr>
+                <tr><td>بيانات حساسة في التخزين</td><td>لا تخزّن كلمات المرور أو الرموز السرية</td></tr>
+                <tr><td>ثقة كاملة بالعميل</td><td>تحقق دائماً على الخادم أيضاً</td></tr>
+                <tr><td>eval وتنفيذ نصوص</td><td>تجنّب eval وFunction على مدخلات المستخدم</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="js">let safe = document.createTextNode(userInput);
+target.appendChild(safe);</pre>
+        </div>
+
+        <div class="notes"><strong>قاعدة:</strong> أي شيء يأتي من المستخدم غير موثوق حتى يُثبت العكس، وأنشئ عناصر DOM بأمان بدل حقن نصوص HTML.</div>
+      </section>
+
+      <section id="js-best-practices">
+        <h2>أفضل الممارسات في JavaScript</h2>
+
+        <div class="tag">
+          <h3>كتابة كود نظيف</h3>
+          <ul>
+            <li>استخدم <code>const</code> افتراضياً و<code>let</code> عند الحاجة فقط.</li>
+            <li>فضّل <code>===</code> على <code>==</code> دائماً.</li>
+            <li>أعطِ المتغيرات والدوال أسماءً واضحة معبّرة.</li>
+            <li>قسّم الكود إلى دوال صغيرة لكل منها مهمة واحدة.</li>
+            <li>تعامل مع الأخطاء ولا تتجاهلها.</li>
+            <li>استخدم <code>defer</code> أو مكان السكربت الصحيح لتجنّب أخطاء العناصر غير الجاهزة.</li>
+          </ul>
+        </div>
+
+        <div class="tag">
+          <h3>بنية المشروع</h3>
+          <pre data-lang="js">const App = {
+  state: { count: 0 },
+  init() {
+    document.querySelector(".inc").addEventListener("click", () =&gt; {
+      this.state.count++;
+      this.render();
+    });
+  },
+  render() {
+    document.querySelector(".count").textContent = this.state.count;
+  }
+};
+App.init();</pre>
+          <p class="desc">تنظيم الكود في كائن أو وحدات يقلّل التلوّث في النطاق العام ويجعل الاختبار والصيانة أسهل.</p>
+        </div>
+      </section>
+    </div>
 
     <footer>
-       HTML5 شامل ومفصل — تصميم وتطوير: <strong>Mohammad Salem</strong> © 2025
+      HTML و CSS و JavaScript — مرجع شامل ومفصل، تصميم وتطوير: <strong>Mohammad Salem</strong> © 2026
     </footer>
 
   </main>
 </div>
-	    <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@0.3.7"></script>
+
+<div class="overlay" id="overlay"></div>
+<button id="backTop" type="button" aria-label="العودة إلى الأعلى">&#8593;</button>
+
+<script>
+// ==========================M E D O=============================
+(function () {
+  'use strict';
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  var RULES = {
+    html: [
+      { re: /<!DOCTYPE[^>]{0,}>/iy, cls: 'kw' },
+      { re: /<\/?[a-zA-Z][a-zA-Z0-9-]{0,}/y, cls: 'tag' },
+      { re: /[a-zA-Z-]+(?=\s*=)/y, cls: 'attr' },
+      { re: /"[^"]*"|'[^']*'/y, cls: 'str' }
+    ],
+    css: [
+      { re: /@[a-zA-Z-]+/y, cls: 'kw' },
+      { re: /"[^"]*"|'[^']*'/y, cls: 'str' },
+      { re: /#[0-9a-fA-F]{3,8}\b/y, cls: 'num' },
+      { re: /-?\d+(?:\.\d+)?(?:px|em|rem|ex|ch|%|vh|vw|vmin|vmax|s|ms|deg|turn|fr|pt|cm|mm|in)?/y, cls: 'num' },
+      { re: /[a-zA-Z-]+(?=\s*:)/y, cls: 'attr' },
+      { re: /[a-zA-Z][\w-]*/y, cls: 'id' },
+      { re: /[.#][a-zA-Z_][\w-]{0,}/y, cls: 'tag' }
+    ],
+    js: [
+      { re: /\/\/[^\n]*|\/\*[\s\S]*?\*\//y, cls: 'cmt' },
+      { re: /(?<=\.)[a-zA-Z_$][\w$]*(?=\s*\()/y, cls: 'fn' },
+      { re: /(?<=\.)[a-zA-Z_$][\w$]*/y, cls: 'id' },
+      { re: /`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/y, cls: 'str' },
+      { re: /\b(?:const|let|var|function|return|if|else|for|while|do|switch|case|default|break|continue|class|extends|new|typeof|instanceof|this|super|try|catch|finally|throw|async|await|yield|import|export|from|of|in|delete|void|static|get|set|null|undefined|true|false)\b/y, cls: 'kw' },
+      { re: /\b\d+(?:\.\d+)?\b/y, cls: 'num' },
+      { re: /[a-zA-Z_$][\w$]*(?=\s*\()/y, cls: 'fn' },
+      { re: /[A-Z][\w$]{0,}/y, cls: 'cls' }
+    ]
+  };
+
+  function highlight(code, lang) {
+    var rules = RULES[lang] || RULES.html;
+    var out = '';
+    var i = 0;
+    var n = code.length;
+    while (i < n) {
+      var hit = false;
+      for (var k = 0; k < rules.length; k++) {
+        var rule = rules[k];
+        rule.re.lastIndex = i;
+        var m = rule.re.exec(code);
+        if (m && m.index === i && m[0].length) {
+          out += '<span class="tok-' + rule.cls + '">' + esc(m[0]) + '</span>';
+          i += m[0].length;
+          hit = true;
+          break;
+        }
+      }
+      if (!hit) {
+        out += esc(code.charAt(i));
+        i++;
+      }
+    }
+    return out;
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+      document.body.removeChild(ta);
+    });
+  }
+
+  function initCodeBlocks() {
+    var blocks = document.querySelectorAll('main pre');
+    Array.prototype.forEach.call(blocks, function (pre) {
+      if (pre.getAttribute('data-ready') === '1') { return; }
+      pre.setAttribute('data-ready', '1');
+      var codeEl = pre.querySelector('code');
+      var raw = (codeEl || pre).textContent;
+      var lang = pre.getAttribute('data-lang') || (codeEl && codeEl.getAttribute('data-lang')) || 'html';
+      try {
+        var html = highlight(raw, lang);
+        if (codeEl) {
+          codeEl.innerHTML = html;
+        } else {
+          pre.innerHTML = html;
+        }
+      } catch (err) {}
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = 'نسخ';
+      btn.setAttribute('aria-label', 'نسخ الكود');
+      btn.addEventListener('click', function () {
+        copyText(raw).then(function () {
+          btn.textContent = 'تم النسخ';
+          btn.classList.add('done');
+          window.setTimeout(function () {
+            btn.textContent = 'نسخ';
+            btn.classList.remove('done');
+          }, 1400);
+        }).catch(function () {
+          btn.textContent = 'تعذر النسخ';
+        });
+      });
+      pre.appendChild(btn);
+    });
+  }
+
+  function wrapTables() {
+    var tables = document.querySelectorAll('main table');
+    Array.prototype.forEach.call(tables, function (tb) {
+      if (tb.parentElement && tb.parentElement.classList.contains('table-wrap')) { return; }
+      var wrap = document.createElement('div');
+      wrap.className = 'table-wrap';
+      tb.parentNode.insertBefore(wrap, tb);
+      wrap.appendChild(tb);
+    });
+  }
+
+  var REF_NAMES = { 'ref-html': 'HTML', 'ref-css': 'CSS', 'ref-js': 'JavaScript' };
+  var REF_IDS = ['ref-html', 'ref-css', 'ref-js'];
+
+  function closeMenu() {
+    document.body.classList.remove('menu-open');
+    var t = document.getElementById('menuToggle');
+    if (t) { t.setAttribute('aria-expanded', 'false'); }
+  }
+
+  function activate(refId, scrollUp) {
+    REF_IDS.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) { el.classList.toggle('active', id === refId); }
+    });
+    var tabs = document.querySelectorAll('.cat-tab');
+    Array.prototype.forEach.call(tabs, function (tab) {
+      var on = tab.getAttribute('data-ref') === refId;
+      tab.classList.toggle('active', on);
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    var navs = document.querySelectorAll('.side-nav');
+    Array.prototype.forEach.call(navs, function (nav) {
+      nav.hidden = nav.getAttribute('data-ref') !== refId;
+    });
+    if (scrollUp !== false) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    closeMenu();
+  }
+
+  function initTabs() {
+    var tabs = document.querySelectorAll('.cat-tab');
+    Array.prototype.forEach.call(tabs, function (tab) {
+      tab.addEventListener('click', function () {
+        activate(tab.getAttribute('data-ref'));
+      });
+    });
+  }
+
+  function norm(t) {
+    return String(t).toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
+  }
+
+  function goHash() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (!el) { return; }
+    var ref = el.closest('.reference');
+    if (ref) { activate(ref.id, false); }
+    window.setTimeout(function () { el.scrollIntoView(); }, 60);
+  }
+
+  var SEARCH_INDEX = [];
+
+  function buildIndex() {
+    var refs = document.querySelectorAll('main .reference');
+    Array.prototype.forEach.call(refs, function (ref) {
+      var refId = ref.id;
+      var refName = REF_NAMES[refId] || refId;
+      var sections = ref.querySelectorAll('section');
+      Array.prototype.forEach.call(sections, function (sec) {
+        var h2 = sec.querySelector('h2');
+        SEARCH_INDEX.push({
+          el: h2 || sec,
+          sectionId: sec.id,
+          refId: refId,
+          refName: refName,
+          title: (h2 ? h2.textContent : sec.id).trim(),
+          text: norm(sec.textContent)
+        });
+      });
+      var tags = ref.querySelectorAll('.tag');
+      Array.prototype.forEach.call(tags, function (tag) {
+        var h3 = tag.querySelector('h3');
+        if (!h3) { return; }
+        var sec = tag.closest('section');
+        SEARCH_INDEX.push({
+          el: h3,
+          sectionId: sec ? sec.id : '',
+          refId: refId,
+          refName: refName,
+          title: h3.textContent.trim(),
+          text: norm(tag.textContent)
+        });
+      });
+    });
+  }
+
+  function doSearch(query) {
+    var results = document.getElementById('searchResults');
+    var q = norm(query.trim());
+    results.innerHTML = '';
+    if (q.length < 2) {
+      results.hidden = true;
+      return;
+    }
+    var seen = {};
+    var found = [];
+    SEARCH_INDEX.forEach(function (item) {
+      var inTitle = norm(item.title).indexOf(q) > -1;
+      var inText = item.text.indexOf(q) > -1;
+      if (!inTitle && !inText) { return; }
+      var key = item.refId + '|' + item.sectionId + '|' + item.title;
+      if (seen[key]) { return; }
+      seen[key] = 1;
+      found.push({ item: item, inTitle: inTitle });
+    });
+    found.sort(function (a, b) { return (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0); });
+    found = found.slice(0, 25);
+    if (!found.length) {
+      results.innerHTML = '<div class="sr-empty">لا توجد نتائج مطابقة</div>';
+      results.hidden = false;
+      return;
+    }
+    found.forEach(function (r) {
+      var a = document.createElement('a');
+      a.href = '#' + (r.item.sectionId || '');
+      var idx = r.item.text.indexOf(q);
+      var snip = '';
+      if (idx > -1) {
+        snip = r.item.text.slice(Math.max(0, idx - 30), idx + 60).replace(/\s+/g, ' ').trim();
+      }
+      a.innerHTML =
+        '<span class="sr-ref">' + esc(r.item.refName) + '</span>' +
+        '<div class="sr-title">' + esc(r.item.title) + '</div>' +
+        (snip ? '<div class="sr-snip">...' + esc(snip) + '...</div>' : '');
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        activate(r.item.refId, false);
+        results.hidden = true;
+        window.setTimeout(function () {
+          r.item.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+      });
+      results.appendChild(a);
+    });
+    results.hidden = false;
+  }
+
+  function initSearch() {
+    var input = document.getElementById('searchInput');
+    var results = document.getElementById('searchResults');
+    var timer = null;
+    input.addEventListener('input', function () {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () {
+        doSearch(input.value);
+      }, 140);
+    });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        results.hidden = true;
+        input.blur();
+      }
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.search-box')) {
+        results.hidden = true;
+      }
+    });
+  }
+
+  function initMobileMenu() {
+    var btn = document.getElementById('menuToggle');
+    var overlay = document.getElementById('overlay');
+    btn.addEventListener('click', function () {
+      var open = document.body.classList.toggle('menu-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    overlay.addEventListener('click', closeMenu);
+    document.addEventListener('click', function (e) {
+      if (window.innerWidth <= 900 && document.body.classList.contains('menu-open') && !e.target.closest('#sidebar') && !e.target.closest('#menuToggle')) {
+        closeMenu();
+      }
+    });
+    var links = document.querySelectorAll('#sidebar a');
+    Array.prototype.forEach.call(links, function (a) {
+      a.addEventListener('click', function () {
+        if (window.innerWidth <= 900) { closeMenu(); }
+      });
+    });
+  }
+
+  function initBackTop() {
+    var btn = document.getElementById('backTop');
+    window.addEventListener('scroll', function () {
+      btn.classList.toggle('show', window.scrollY > 420);
+    });
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  function initScrollSpy() {
+    if (!('IntersectionObserver' in window)) { return; }
+    var links = document.querySelectorAll('.side-nav a');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && entry.target.id) {
+          Array.prototype.forEach.call(links, function (l) {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    var sections = document.querySelectorAll('main section[id]');
+    Array.prototype.forEach.call(sections, function (s) { observer.observe(s); });
+  }
+
+  function init() {
+    wrapTables();
+    buildIndex();
+    initCodeBlocks();
+    initTabs();
+    initSearch();
+    initMobileMenu();
+    initBackTop();
+    initScrollSpy();
+    window.addEventListener('hashchange', goHash);
+    goHash();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (i) { return document.getElementById(i); };
+  function bind(ids, fn) {
+    ids.forEach(function (id) {
+      $(id).addEventListener('input', fn);
+      $(id).addEventListener('change', fn);
+    });
+    fn();
+  }
+  function say(id, t) { $(id).textContent = t; }
+
+  bind(['bm-m', 'bm-b', 'bm-p'], function () {
+    var m = $('bm-m').value, b = $('bm-b').value, p = $('bm-p').value;
+    $('bm-o').style.padding = m + 'px';
+    $('bm-i').style.borderWidth = b + 'px';
+    $('bm-i').style.padding = p + 'px';
+    say('bm-t', 'margin: ' + m + 'px;\nborder: ' + b + 'px solid;\npadding: ' + p + 'px;');
+  });
+
+  bind(['gr-a', 'gr-1', 'gr-2'], function () {
+    var g = 'linear-gradient(' + $('gr-a').value + 'deg, ' + $('gr-1').value + ', ' + $('gr-2').value + ')';
+    $('gr-b').style.background = g;
+    say('gr-t', 'background: ' + g + ';');
+  });
+
+  bind(['fx-j', 'fx-a', 'fx-d'], function () {
+    var s = $('fx').style;
+    s.justifyContent = $('fx-j').value;
+    s.alignItems = $('fx-a').value;
+    s.flexDirection = $('fx-d').value;
+    say('fx-t', 'display: flex;\njustify-content: ' + $('fx-j').value + ';\nalign-items: ' + $('fx-a').value + ';\nflex-direction: ' + $('fx-d').value + ';');
+  });
+
+  bind(['gd-c', 'gd-g'], function () {
+    var cols = 'repeat(' + $('gd-c').value + ', 1fr)';
+    $('gd').style.gridTemplateColumns = cols;
+    $('gd').style.gap = $('gd-g').value + 'px';
+    say('gd-t', 'grid-template-columns: ' + cols + ';\ngap: ' + $('gd-g').value + 'px;');
+  });
+
+  bind(['ts-d'], function () {
+    $('ts-b').style.transitionDuration = $('ts-d').value;
+  });
+
+  bind(['tr-r', 'tr-s', 'tr-x'], function () {
+    var t = 'translateX(' + $('tr-x').value + 'px) rotate(' + $('tr-r').value + 'deg) scale(' + ($('tr-s').value / 100) + ')';
+    $('tr-b').style.transform = t;
+    say('tr-t', 'transform: ' + t + ';');
+  });
+
+  $('an-btn').addEventListener('click', function () {
+    var el = $('an-b');
+    el.style.animationPlayState = el.style.animationPlayState === 'paused' ? 'running' : 'paused';
+  });
+
+  bind(['fl-b', 'fl-g', 'fl-s'], function () {
+    var f = 'blur(' + $('fl-b').value + 'px) grayscale(' + $('fl-g').value + '%)';
+    var sh = '0 ' + $('fl-s').value + 'px ' + (2 * $('fl-s').value) + 'px rgba(0, 0, 0, 0.35)';
+    $('fl-x').style.filter = f;
+    $('fl-x').style.boxShadow = sh;
+    say('fl-t', 'filter: ' + f + ';\nbox-shadow: ' + sh + ';');
+  });
+
+  bind(['eq-s'], function () {
+    var a = 1, b = $('eq-s').value === 'n' ? 1 : '1';
+    say('eq-o', JSON.stringify(a) + ' == ' + JSON.stringify(b) + '  →  ' + (a == b) + '\n' + JSON.stringify(a) + ' === ' + JSON.stringify(b) + '  →  ' + (a === b));
+  });
+
+  bind(['st-i'], function () {
+    var v = $('st-i').value;
+    say('st-o', 'length: ' + v.length + '\ntrim().toLowerCase(): ' + JSON.stringify(v.trim().toLowerCase()) + '\ntoUpperCase(): ' + JSON.stringify(v.toUpperCase()) + '\nsplit(" "): ' + JSON.stringify(v.trim().split(' ')));
+  });
+
+  bind(['cd-i'], function () {
+    var score = Number($('cd-i').value);
+    var r = score >= 90 ? 'ممتاز' : score >= 75 ? 'جيد جداً' : 'يحتاج تحسين';
+    say('cd-o', 'score = ' + score + '  →  ' + r);
+  });
+
+  function runLoop() {
+    var n = Math.min(10, Math.max(1, Number($('lp-i').value) || 1)), lines = [];
+    for (var i = 0; i < n; i++) { lines.push('الرقم ' + i); }
+    say('lp-o', lines.join('\n'));
+  }
+  $('lp-b').addEventListener('click', runLoop);
+  runLoop();
+
+  bind(['ar-i', 'ar-t'], function () {
+    var t = Number($('ar-t').value);
+    var prices = $('ar-i').value.split(',').map(Number).filter(function (n) { return !isNaN(n); });
+    var found = prices.find(function (p) { return p > t; });
+    say('ar-o', 'map (×1.15): ' + JSON.stringify(prices.map(function (p) { return +(p * 1.15).toFixed(2); })) + '\nfilter (> ' + t + '): ' + JSON.stringify(prices.filter(function (p) { return p > t; })) + '\nreduce (sum): ' + prices.reduce(function (s, p) { return s + p; }, 0) + '\nfind (> ' + t + '): ' + found);
+  });
+
+  var clicks = 0;
+  $('ev-b').addEventListener('click', function () { clicks++; say('ev-o', 'عدد النقرات: ' + clicks); });
+  $('ev-i').addEventListener('keydown', function (e) { say('ev-o', 'event.key = "' + e.key + '"   event.code = "' + e.code + '"'); });
+
+  function addItem() {
+    var inp = $('dm-i'), txt = inp.value.trim();
+    if (!txt) { return; }
+    var li = document.createElement('li');
+    li.textContent = txt;
+    li.addEventListener('click', function () { li.remove(); });
+    $('dm-l').appendChild(li);
+    inp.value = '';
+    inp.focus();
+  }
+  $('dm-a').addEventListener('click', addItem);
+  $('dm-i').addEventListener('keydown', function (e) { if (e.key === 'Enter') { addItem(); } });
+
+  var tick = null, seconds = 0;
+  $('tm-s').addEventListener('click', function () {
+    if (tick) { return; }
+    tick = window.setInterval(function () { seconds++; say('tm-o', 'مرّت ' + seconds + ' ثانية'); }, 1000);
+  });
+  $('tm-x').addEventListener('click', function () {
+    window.clearInterval(tick);
+    tick = null;
+    say('tm-o', 'توقف العداد عند ' + seconds + ' ثانية');
+  });
+
+  bind(['em-i'], function () {
+    var v = $('em-i').value;
+    var ok = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+    var o = $('em-o');
+    o.style.color = v ? (ok ? '#27ae60' : '#c0392b') : '';
+    say('em-o', v ? 'validateEmail("' + v + '")  →  ' + ok : 'اكتب بريداً لتجربة التحقق');
+  });
+})();
+</script>
 
 </body>
 
