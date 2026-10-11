@@ -1,8 +1,8 @@
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="مرجع شامل ومفصل لتعلم HTML و CSS و JavaScript بالعربية مع أمثلة عملية.">
   <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@0.3.7"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>𓂀</text></svg>" />
   <title>مرجع شامل: HTML و CSS و JavaScript</title>
@@ -64,7 +64,9 @@
       white-space: nowrap;
     }
 
-    .brand span { color: var(--accent); }
+    .brand-full span { color: var(--accent); }
+
+    .brand-short { display: none; }
 
     .search-box {
       position: relative;
@@ -524,8 +526,11 @@
     }
 
     @media (max-width: 560px) {
-      .brand span { display: none; }
-      .brand { font-size: 13px; }
+      .topbar { gap: 10px; padding: 0 12px; }
+      .brand { font-size: 15px; }
+      .brand .brand-full { display: none; }
+      .brand .brand-short { display: inline; }
+      .search-box { flex: 1; width: auto; min-width: 0; margin-right: 0; }
     }
 
     @media print {
@@ -566,15 +571,15 @@
 
 <body>
 
-<!-- ===========================M E D O============================ -->
+<!-- =========================M E D O============================== -->
 
 <header class="topbar">
   <button class="menu-toggle" id="menuToggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="sidebar">
     <span></span><span></span><span></span>
   </button>
-  <div class="brand">مرجع <span>HTML</span> و <span>CSS</span> و <span>JavaScript</span></div>
+  <div class="brand"><span class="brand-full">مرجع <span>HTML</span> و <span>CSS</span> و <span>JavaScript</span></span><span class="brand-short">المرجع</span></div>
   <div class="search-box">
-    <input id="searchInput" type="search" placeholder="ابحث في المرجع كامل..." aria-label="بحث في المرجع" autocomplete="off">
+    <input id="searchInput" type="search" placeholder="ابحث في المرجع..." aria-label="بحث في المرجع" autocomplete="off">
     <div class="search-results" id="searchResults" hidden></div>
   </div>
 </header>
@@ -687,7 +692,7 @@
     <nav class="side-nav" data-ref="ref-js" aria-label="روابط مرجع JavaScript" hidden>
       <strong>الأساسيات</strong>
       <a href="#js-intro">مقدمة إلى JavaScript</a>
-      <a href="#js-syntax">الصياغة والتمحمدمات</a>
+      <a href="#js-syntax">الصياغة والتعليمات</a>
       <a href="#js-variables">المتغيرات let/const/var</a>
       <a href="#js-datatypes">أنواع البيانات</a>
       <a href="#js-operators">العمليات (Operators)</a>
@@ -879,11 +884,11 @@
 
         <div class="tag">
           <h3>&lt;figure&gt; و &lt;figcaption&gt;</h3>
-          <p class="desc">لعرض صورة مع تمحمدق دلالي.</p>
+          <p class="desc">لعرض صورة مع تعليق دلالي.</p>
           <div class="example">
             <figure>
               <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='400' height='200' fill='%231e90ff'/%3E%3C/svg%3E" alt="صورة توضيحية" style="max-width:100%;">
-              <figcaption>تمحمدق على الصورة هنا</figcaption>
+              <figcaption>تعليق على الصورة هنا</figcaption>
             </figure>
           </div>
         </div>
@@ -1144,7 +1149,7 @@
           <ul>
             <li>كل تصريح ينتهي بفاصلة منقوطة <code>;</code> وكل كتلة تفتح بـ <code>{</code> وتغلق بـ <code>}</code>.</li>
             <li>أسماء الخصائص والقيم غير حسّاسة لحالة الأحرف، لكن الأفضل الكتابة بحروف صغيرة.</li>
-            <li>يمكن كتابة أكثر من محدد يفصل بينهم فاصلة لتطبيق نفس القاعدة محمدهم جميعاً.</li>
+            <li>يمكن كتابة أكثر من محدد يفصل بينهم فاصلة لتطبيق نفس القاعدة عليهم جميعاً.</li>
             <li>المسافات الزائدة لا تؤثر على النتيجة، لكن التنسيق الجيد يسهّل القراءة.</li>
           </ul>
           <pre data-lang="css">h1, h2, h3 {
@@ -1524,7 +1529,7 @@ h1 { font-size: 2rem; }
 
         <div class="tag">
           <h3>content-box مقابل border-box</h3>
-          <p class="desc">افتراضياً يحسب المتصفح العرض على المحتوى فقط (<code>content-box</code>)، مما يجعل الصندوق أكبر فمحمداً عند إضافة حشوة أو حد. مع <code>border-box</code> يصبح العرض شاملاً للحشوة والحد، وهو السلوك الأكثر منطقية.</p>
+          <p class="desc">افتراضياً يحسب المتصفح العرض على المحتوى فقط (<code>content-box</code>)، مما يجعل الصندوق أكبر فعلياً عند إضافة حشوة أو حد. مع <code>border-box</code> يصبح العرض شاملاً للحشوة والحد، وهو السلوك الأكثر منطقية.</p>
           <pre data-lang="css">* { box-sizing: border-box; }
 .box {
   width: 300px;
@@ -2022,7 +2027,7 @@ p::first-line { font-weight: bold; }</pre>
                 <tr><td><code>brightness(n)</code></td><td>زيادة أو تقليل السطوع</td></tr>
                 <tr><td><code>grayscale(n)</code></td><td>تحويل لتدرّج رمادي</td></tr>
                 <tr><td><code>contrast(n)</code></td><td>تعديل التباين</td></tr>
-                <tr><td><code>drop-shadow()</code></td><td>ظل يتبع الشكل الفمحمد</td></tr>
+                <tr><td><code>drop-shadow()</code></td><td>ظل يتبع الشكل الفعلي</td></tr>
               </tbody>
             </table>
           </div>
@@ -2145,7 +2150,7 @@ p::first-line { font-weight: bold; }</pre>
 
         <div class="tag">
           <h3>إبراز التركيز</h3>
-          <p class="desc">لا تحذف حلقة التركيز الافتراضية دون بديل واضح، لأن مستخدمي الكيبورد يعتمدون محمدها للتنقل.</p>
+          <p class="desc">لا تحذف حلقة التركيز الافتراضية دون بديل واضح، لأن مستخدمي الكيبورد يعتمدون عليها للتنقل.</p>
           <pre data-lang="css">a:focus-visible,
 button:focus-visible {
   outline: 3px solid #1e90ff;
@@ -2238,8 +2243,8 @@ button:focus-visible {
 
     <div class="reference" id="ref-js" role="tabpanel" aria-label="مرجع JavaScript" hidden>
       <h1>مرجع JavaScript الكامل</h1>
-      <p class="page-sub">لغة برمجة الويب التفامحمدة</p>
-      <p class="intro">من المتغيرات والدوال إلى الـ DOM والأحداث والوعود fetch: مرجع عملي مبني على أمثلة حقيقية لبناء صفحات تفامحمدة.</p>
+      <p class="page-sub">لغة برمجة الويب التفاعلية</p>
+      <p class="intro">من المتغيرات والدوال إلى الـ DOM والأحداث والوعود fetch: مرجع عملي مبني على أمثلة حقيقية لبناء صفحات تفاعلية.</p>
       <section id="js-intro">
         <h2>مقدمة إلى JavaScript</h2>
 
@@ -2267,25 +2272,25 @@ document.body.style.background = "#f1f2f6";</pre>
       </section>
 
       <section id="js-syntax">
-        <h2>الصياغة والتمحمدمات</h2>
+        <h2>الصياغة والتعليمات</h2>
 
         <div class="tag">
           <h3>المبادئ الأساسية</h3>
           <ul>
             <li>الكود حسّاس لحالة الأحرف: <code>name</code> و<code>Name</code> متغيّران مختلفان.</li>
-            <li>كل تمحمدمة تُنهى بفاصلة منقوطة، ويفضّل الالتزام بها دائماً لتفادي مفاجآت الإدراج التلقائي.</li>
+            <li>كل تعليمة تُنهى بفاصلة منقوطة، ويفضّل الالتزام بها دائماً لتفادي مفاجآت الإدراج التلقائي.</li>
             <li>الكتلة تُحاط بأقواس معقوفة <code>{ }</code> وتُستخدم في الدوال والشروط والحلقات.</li>
             <li>الأسماء المكوّنة من عدة كلمات تُكتب بنمط camelCase مثل <code>userName</code>.</li>
           </ul>
         </div>
 
         <div class="tag">
-          <h3>التمحمدقات في JavaScript</h3>
-          <p class="desc">توجد تمحمدقات السطر الواحد وتمحمدقات الكتل المتعددة الأسطر. تُستخدم لتوضيح الكود، </p>
-          <pre data-lang="js">// تمحمدق سطر واحد
+          <h3>التعليقات في JavaScript</h3>
+          <p class="desc">توجد تعليقات السطر الواحد وتعليقات الكتل المتعددة الأسطر. تُستخدم لتوضيح الكود، </p>
+          <pre data-lang="js">// تعليق سطر واحد
 let a = 1;
 
-/* تمحمدق
+/* تعليق
    متعدد الأسطر */
 let b = 2;</pre>
         </div>
@@ -2882,7 +2887,7 @@ li.remove();</pre>
 
         <div class="tag">
           <h3>إضافة المستمعين</h3>
-          <div class="example"><div class="demo"><button type="button" id="ev-b">اضغط محمدّ</button><input type="text" id="ev-i" placeholder="اكتب أي مفتاح"></div><div class="demo-out" id="ev-o"></div></div>
+          <div class="example"><div class="demo"><button type="button" id="ev-b">اضغط عليّ</button><input type="text" id="ev-i" placeholder="اكتب أي مفتاح"></div><div class="demo-out" id="ev-o"></div></div>
           <pre data-lang="js">let btn = document.querySelector(".save");
 btn.addEventListener("click", function (event) {
   event.preventDefault();
@@ -3345,7 +3350,7 @@ App.init();</pre>
 <button id="backTop" type="button" aria-label="العودة إلى الأعلى">&#8593;</button>
 
 <script>
-// ==========================M E D O=============================
+// =========================M E D O==============================
 (function () {
   'use strict';
 
